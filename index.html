@@ -3,928 +3,490 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>විෂයානුබද්ධ වාග්මාලාව</title>
+<title>පරිපාලක පිටුව | විෂයානුබද්ධ වාග් මාලාව</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700;800&family=Noto+Serif+Sinhala:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#EFE9DC;
-    --paper-raised:#F7F3E9;
-    --ink:#26221A;
-    --ink-soft:#5B564A;
-    --line:#D9D1BE;
-    --maroon:#7A2E2E;
-    --maroon-dark:#5E2222;
-    --brass:#A9822C;
-    --sage:#5C6E52;
-    --draft:#6B6455;
-    --danger:#9A3324;
-    --card-shadow: 0 1px 0 rgba(38,34,26,0.06);
+    --forest-900:#0f2e21;
+    --forest-800:#163d2c;
+    --forest-700:#1b4332;
+    --forest-600:#2d6a4f;
+    --forest-500:#3f8161;
+    --mint-300:#95d5b2;
+    --mint-200:#b7e4c7;
+    --mint-100:#d9f2e4;
+    --paper:#f4faf6;
+    --paper-2:#ffffff;
+    --ink:#12231a;
+    --ink-soft:#3f5c4c;
+    --danger:#b3492f;
+    --danger-soft:#f4e2dd;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(15,46,33,0.14);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--paper);
+    background:
+      radial-gradient(1100px 480px at 85% -10%, var(--mint-100) 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, var(--mint-100) 0%, transparent 55%),
+      var(--paper);
+    font-family:'Noto Sans Sinhala', sans-serif;
     color:var(--ink);
-    font-family: Georgia, "Noto Serif Sinhala", "Iskoola Pota", serif;
-    line-height:1.5;
     min-height:100vh;
+    -webkit-user-select:text;
   }
-  .ui{font-family: -apple-system, "Segoe UI", "Noto Sans Sinhala", "Iskoola Pota", sans-serif;}
+  h1,h2,h3,.brand{font-family:'Noto Serif Sinhala', serif;}
 
-  #app{max-width:920px; margin:0 auto; padding:28px 20px 80px;}
-
-  header.top{
-    border-bottom:2px solid var(--ink);
-    padding-bottom:14px;
-    margin-bottom:22px;
+  header.topbar{
+    background:linear-gradient(120deg, var(--forest-900), var(--forest-700) 65%, var(--forest-600));
+    color:var(--mint-100);
+    padding:22px 32px;
     display:flex;
-    align-items:flex-end;
+    align-items:center;
     justify-content:space-between;
-    gap:16px;
-    flex-wrap:wrap;
-  }
-  header.top h1{
-    margin:0;
-    font-size:28px;
-    font-weight:700;
-    letter-spacing:0.2px;
-  }
-  header.top .sub{
-    font-family: -apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:13px;
-    color:var(--ink-soft);
-    margin-top:4px;
-  }
-
-  nav.tabs{
-    display:flex;
-    gap:2px;
-    font-family: -apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-  }
-  nav.tabs button{
-    background:transparent;
-    border:1px solid var(--ink);
-    border-bottom:none;
-    padding:9px 18px;
-    font-size:14px;
-    cursor:pointer;
-    color:var(--ink);
-    border-radius:6px 6px 0 0;
+    box-shadow:var(--shadow);
     position:relative;
-    top:1px;
+    overflow:hidden;
   }
-  nav.tabs button.active{
-    background:var(--paper-raised);
-    font-weight:700;
-    border-bottom:1px solid var(--paper-raised);
+  header.topbar::after{
+    content:"";
+    position:absolute; right:-60px; top:-60px;
+    width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle, rgba(149,213,178,0.25), transparent 70%);
   }
-  nav.tabs button:not(.active):hover{ background:rgba(38,34,26,0.05); }
+  .brand{font-size:1.5rem; font-weight:700; color:#fff; letter-spacing:.2px;}
+  .brand small{display:block; font-family:'Noto Sans Sinhala',sans-serif; font-weight:400; font-size:.72rem; color:var(--mint-200); margin-top:2px;}
+  .topbar-right{display:flex; align-items:center; gap:14px; font-size:.92rem;}
+  .pill{background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); padding:6px 14px; border-radius:999px;}
+  button.logout{
+    background:transparent; border:1px solid var(--mint-300); color:var(--mint-200);
+    padding:8px 18px; border-radius:999px; cursor:pointer; font-family:inherit; font-size:.88rem;
+    transition:.2s;
+  }
+  button.logout:hover{background:var(--mint-300); color:var(--forest-900);}
 
-  section.view{display:none;}
-  section.view.active{display:block;}
+  main{max-width:980px; margin:0 auto; padding:36px 20px 80px;}
 
-  /* ---------- shared controls ---------- */
-  .field{ margin-bottom:14px; }
-  .field label{
-    display:block; font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:12.5px; color:var(--ink-soft); margin-bottom:5px;
+  /* ---------- LOGIN ---------- */
+  #loginWrap{
+    max-width:420px; margin:8vh auto 0; background:var(--paper-2);
+    border-radius:20px; padding:40px 34px; box-shadow:var(--shadow);
+    border:1px solid var(--mint-200);
   }
-  .field input[type=text], .field input[type=search], .field textarea, .field select{
-    width:100%;
-    padding:9px 10px;
-    border:1px solid var(--line);
-    background:#fff;
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:14.5px;
-    color:var(--ink);
-    border-radius:4px;
+  #loginWrap h2{margin:0 0 6px; color:var(--forest-800); font-size:1.55rem;}
+  #loginWrap p.sub{margin:0 0 26px; color:var(--ink-soft); font-size:.92rem;}
+  label{display:block; font-size:.85rem; color:var(--forest-700); font-weight:600; margin:0 0 6px;}
+  input[type=text], input[type=password], textarea, select{
+    width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid #cfe6d7;
+    background:var(--paper); font-family:inherit; font-size:.95rem; color:var(--ink);
+    margin-bottom:18px; transition:.15s;
   }
-  .field textarea{ min-height:70px; resize:vertical; }
-  .field input:focus, .field textarea:focus, .field select:focus{
-    outline:2px solid var(--brass); outline-offset:0; border-color:var(--brass);
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--forest-600); background:#fff;
+    box-shadow:0 0 0 3px rgba(45,106,79,0.15);
   }
-  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  @media (max-width:640px){ .row2{grid-template-columns:1fr;} }
+  textarea{resize:vertical; min-height:80px;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--forest-700); color:#fff; border:none; padding:12px 22px;
+    border-radius:10px; font-family:inherit; font-size:.95rem; font-weight:600;
+    cursor:pointer; transition:.18s; width:100%;
+  }
+  .btn:hover{background:var(--forest-600); transform:translateY(-1px);}
+  .btn.secondary{background:var(--mint-200); color:var(--forest-800); width:auto; padding:10px 18px;}
+  .btn.secondary:hover{background:var(--mint-300);}
+  .btn.danger{background:var(--danger); width:auto; padding:9px 16px; font-size:.85rem;}
+  .btn.danger:hover{background:#96371f;}
+  .btn.ghost{background:transparent; color:var(--forest-700); border:1.5px solid var(--forest-600); width:auto; padding:9px 16px; font-size:.85rem;}
+  .btn.ghost:hover{background:var(--mint-100);}
+  #loginError{color:var(--danger); font-size:.85rem; margin:-10px 0 16px; min-height:1em;}
 
-  button.btn{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:14px;
-    padding:9px 16px;
-    border-radius:5px;
-    border:1px solid var(--ink);
-    background:var(--ink);
-    color:var(--paper-raised);
-    cursor:pointer;
+  /* ---------- DASHBOARD ---------- */
+  #dashboard{display:none;}
+  .section-title{
+    display:flex; align-items:baseline; justify-content:space-between; margin:38px 0 16px;
   }
-  button.btn:hover{ background:#3a3527; }
-  button.btn.secondary{ background:transparent; color:var(--ink); }
-  button.btn.secondary:hover{ background:rgba(38,34,26,0.06); }
-  button.btn.danger{ background:var(--danger); border-color:var(--danger); color:#fff; }
-  button.btn.danger:hover{ background:#7d2a1c; }
-  button.btn:disabled{ opacity:0.5; cursor:default; }
-  button.link{
-    background:none;border:none;padding:2px 6px;cursor:pointer;
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:13px; color:var(--maroon); text-decoration:underline;
-  }
+  .section-title h2{font-size:1.25rem; color:var(--forest-800); margin:0;}
+  .section-title span{font-size:.82rem; color:var(--ink-soft);}
 
-  .badge{
-    display:inline-block; font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:11.5px; padding:2px 9px; border-radius:20px; border:1px solid currentColor;
+  .card{
+    background:var(--paper-2); border-radius:var(--radius); padding:26px 28px;
+    box-shadow:var(--shadow); border:1px solid var(--mint-200);
   }
-  .badge.published{ color:var(--sage); }
-  .badge.draft{ color:var(--draft); }
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:0 20px;}
+  @media (max-width:640px){.grid2{grid-template-columns:1fr;}}
 
-  .banner{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:13px; padding:10px 14px; border-radius:5px; margin-bottom:16px;
+  .entry{
+    background:var(--paper-2); border:1px solid var(--mint-200); border-radius:12px;
+    padding:18px 20px; margin-bottom:14px; position:relative;
+    transition:.15s; border-left:5px solid var(--forest-600);
   }
-  .banner.warn{ background:#F3E6D0; border:1px solid var(--brass); color:#5c4413; }
-  .banner.error{ background:#F6E1DB; border:1px solid var(--danger); color:var(--maroon-dark); }
-  .banner.ok{ background:#E8EDE4; border:1px solid var(--sage); color:#37452f; }
-
-  /* ---------- Admin ---------- */
-  .admin-toolbar{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:18px; }
-  .admin-toolbar input[type=search]{ flex:1; min-width:180px; }
-  .admin-toolbar select{ width:auto; }
-
-  form#entryForm{
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-left:4px solid var(--maroon);
-    border-radius:6px;
-    padding:18px 20px;
-    margin-bottom:26px;
+  .entry.draft{border-left-color:#c99a2e;}
+  .entry:hover{box-shadow:0 6px 18px rgba(15,46,33,0.1);}
+  .entry-top{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+  .entry-word{font-size:1.15rem; font-weight:700; color:var(--forest-800); font-family:'Noto Serif Sinhala',serif;}
+  .status-tag{
+    font-size:.72rem; padding:3px 11px; border-radius:999px; font-weight:600;
+    background:var(--mint-200); color:var(--forest-800);
   }
-  form#entryForm h2{ font-size:16px; margin:0 0 14px; }
-  .form-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:6px; }
-
-  table.entries{
-    width:100%; border-collapse:collapse;
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:14px;
-  }
-  table.entries th{
-    text-align:left; font-weight:600; font-size:12px; color:var(--ink-soft);
-    border-bottom:1px solid var(--ink); padding:8px 8px;
-  }
-  table.entries td{ border-bottom:1px solid var(--line); padding:10px 8px; vertical-align:top; }
-  table.entries tr:hover td{ background:rgba(169,130,44,0.06); }
-  .word-cell{ font-family:Georgia,"Noto Serif Sinhala",serif; font-weight:700; }
-  .meaning-cell{ color:var(--ink-soft); max-width:260px; }
-  .actions-cell{ white-space:nowrap; }
-
-  details.settings{
-    margin:0 0 20px; font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif; font-size:13px;
-  }
-  details.settings summary{ cursor:pointer; color:var(--ink-soft); }
-  details.settings .box{
-    margin-top:10px; padding:12px 14px; background:var(--paper-raised);
-    border:1px solid var(--line); border-radius:6px;
-  }
-  details.settings code{
-    display:block; background:#fff; border:1px solid var(--line); padding:8px;
-    border-radius:4px; font-size:12px; white-space:pre-wrap; margin-top:6px;
+  .status-tag.draft{background:#f7e9c6; color:#7a5c12;}
+  .entry-meta{font-size:.82rem; color:var(--ink-soft); margin-top:6px; line-height:1.6;}
+  .entry-meta b{color:var(--forest-700);}
+  .entry-actions{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;}
+  .empty-state{
+    text-align:center; padding:50px 20px; color:var(--ink-soft); font-size:.95rem;
+    border:1.5px dashed var(--mint-300); border-radius:14px; background:var(--mint-100);
   }
 
-  .empty{
-    text-align:center; padding:40px 10px; color:var(--ink-soft);
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif; font-size:14px;
+  /* edit modal */
+  .overlay{
+    display:none; position:fixed; inset:0; background:rgba(15,46,33,0.55);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+    backdrop-filter:blur(2px);
   }
+  .overlay.show{display:flex;}
+  .modal{
+    background:var(--paper-2); border-radius:18px; padding:30px 32px; max-width:520px; width:100%;
+    box-shadow:0 20px 60px rgba(15,46,33,0.3); max-height:88vh; overflow-y:auto;
+  }
+  .modal h3{margin:0 0 20px; color:var(--forest-800);}
+  .modal-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:6px;}
+  .checkbox-row{display:flex; align-items:center; gap:8px; margin:-6px 0 18px;}
+  .checkbox-row input{width:auto; margin:0;}
+  .checkbox-row label{margin:0; font-weight:500; color:var(--ink);}
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--forest-800); color:#fff; padding:12px 22px; border-radius:10px;
+    font-size:.9rem; box-shadow:var(--shadow); opacity:0; transition:.25s; z-index:300;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
-  /* ---------- Public ---------- */
-  .public-controls{ margin-bottom:20px; }
-  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-  .chip{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:12.5px; padding:5px 13px; border-radius:20px; border:1px solid var(--line);
-    background:#fff; cursor:pointer; color:var(--ink-soft);
-  }
-  .chip.active{ background:var(--ink); color:var(--paper-raised); border-color:var(--ink); }
-
-  .card-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  @media (max-width:640px){ .card-grid{grid-template-columns:1fr;} }
-
-  .word-card{
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-left:4px solid var(--brass);
-    border-radius:6px;
-    padding:16px 18px;
-    box-shadow:var(--card-shadow);
-  }
-  .word-card .w{ font-size:19px; font-weight:700; margin:0 0 4px; }
-  .word-card .cat{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:11.5px; color:var(--brass); margin-bottom:8px; display:block;
-  }
-  .word-card .m{ font-size:14.5px; margin:0 0 6px; }
-  .word-card .s{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:13px; color:var(--ink-soft); margin:0 0 8px;
-  }
-  .word-card .alt{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:12px; color:var(--ink-soft); margin-bottom:8px;
-  }
-  .word-card .src{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:11.5px; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:7px; margin-top:4px;
-  }
-
-  .loading{ text-align:center; padding:30px; color:var(--ink-soft); font-family:-apple-system,sans-serif; }
-
-  /* ---------- Auth ---------- */
-  .login-box{
-    max-width:360px;
-    margin:20px auto 40px;
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-left:4px solid var(--maroon);
-    border-radius:6px;
-    padding:22px 24px;
-  }
-  .login-box h2{ font-size:17px; margin:0 0 4px; }
-  .login-box .hint{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:12.5px; color:var(--ink-soft); margin:0 0 16px;
-  }
-  .login-box .form-actions{ justify-content:flex-start; margin-top:4px; }
-
-  .session-bar{
-    display:flex; align-items:center; justify-content:space-between;
-    gap:10px; flex-wrap:wrap;
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:10px 16px;
-    margin-bottom:18px;
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:13px;
-    color:var(--ink-soft);
-  }
-  .session-bar b{ color:var(--ink); }
-  .session-bar button{
-    background:none; border:none; color:var(--maroon); text-decoration:underline;
-    cursor:pointer; font-size:13px; font-family:inherit;
-  }
-  .word-card .author{
-    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
-    font-size:11.5px; color:var(--brass); text-align:right; margin:6px 0 0; font-style:italic;
+  footer{
+    text-align:center; padding:26px 20px; color:var(--forest-700); font-size:.85rem;
+    background:var(--mint-100); border-top:1px solid var(--mint-200);
   }
 </style>
 </head>
-<body>
-<div id="app">
-  <header class="top">
-    <div>
-      <h1>විෂයානුබද්ධ වාග්මාලාව</h1>
-      <div class="sub">වචන හා දත්ත සමුදාය</div>
-    </div>
-    <nav class="tabs">
-      <button class="ui" data-view="public" id="tabPublic">විෂයානුබද්ධ වාග්මාලාව</button>
-      <button class="ui" data-view="admin" id="tabAdmin">පරිපාලනය</button>
-    </nav>
-  </header>
+<body oncontextmenu="return false;">
 
-  <!-- ============ PUBLIC VIEW ============ -->
-  <section class="view active" id="viewPublic">
-    <div class="public-controls">
-      <div class="field">
-        <label class="ui" for="publicSearch">වචනයක් හෝ අර්ථයක් සොයන්න</label>
-        <input class="ui" type="search" id="publicSearch" placeholder="උදා: ප්‍රඥාව">
+<header class="topbar">
+  <div class="brand">විෂයානුබද්ධ වාග් මාලාව<small>පරිපාලක පුවරුව — ඇතුළත් කිරීම් කළමනාකරණය</small></div>
+  <div class="topbar-right" id="topRightSlot"></div>
+</header>
+
+<main>
+
+  <div id="loginWrap">
+    <h2>ගිණුමට පිවිසෙන්න</h2>
+    <p class="sub">ඔබගේ පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න.</p>
+    <label for="loginUser">Username</label>
+    <input type="text" id="loginUser" autocomplete="username">
+    <label for="loginPass">Password</label>
+    <input type="password" id="loginPass" autocomplete="current-password">
+    <div id="loginError"></div>
+    <button class="btn" id="loginBtn">පිවිසෙන්න</button>
+  </div>
+
+  <div id="dashboard">
+
+    <div class="card">
+      <h2 style="margin-top:0; color:var(--forest-800); font-size:1.2rem;">නව වචනයක් ඇතුළත් කරන්න</h2>
+      <div class="grid2">
+        <div>
+          <label>වචනය</label>
+          <input type="text" id="fWord" placeholder="උදා: සංශ්ලේෂණය">
+        </div>
+        <div>
+          <label>කැටගරිය</label>
+          <input type="text" id="fCategory" placeholder="උදා: විද්‍යාව">
+        </div>
       </div>
-      <div class="chip-row" id="publicCategoryChips"></div>
-    </div>
-    <div id="publicList"><div class="loading ui">පූරණය වෙමින්...</div></div>
-  </section>
-
-  <!-- ============ ADMIN VIEW ============ -->
-  <section class="view" id="viewAdmin">
-
-    <div class="login-box" id="loginBox">
-      <h2 class="ui">පරිපාලක පිවිසුම</h2>
-      <p class="hint">ඔබේ author නමය සහ මුරපදය ඇතුළත් කරන්න.</p>
-      <div id="loginBanner"></div>
-      <form id="loginForm">
-        <div class="field">
-          <label class="ui" for="loginUsername">Author නම</label>
-          <input class="ui" type="text" id="loginUsername" required autocomplete="username">
-        </div>
-        <div class="field">
-          <label class="ui" for="loginPassword">මුරපදය</label>
-          <input class="ui" type="password" id="loginPassword" required autocomplete="current-password">
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn ui" id="loginBtn">ඇතුළු වන්න</button>
-        </div>
-      </form>
-    </div>
-
-    <div id="adminContent" style="display:none;">
-
-    <div class="session-bar ui">
-      <span>ලොග් වී ඇත්තේ <b id="sessionUser"></b> ලෙසිනි</span>
-      <button type="button" id="logoutBtn">ඉවත් වන්න (Logout)</button>
+      <label>අර්ථ විස්තරය</label>
+      <textarea id="fMeaning" placeholder="වචනයේ සම්පූර්ණ අර්ථ විස්තරය මෙහි ලියන්න"></textarea>
+      <label>සාරාංශය</label>
+      <textarea id="fSummary" placeholder="කෙටි සාරාංශයක්"></textarea>
+      <label>මූලාශ්‍රය</label>
+      <input type="text" id="fSource" placeholder="උදා: පෙළ පොත, පිටුව 45">
+      <div class="checkbox-row">
+        <input type="checkbox" id="fDraft">
+        <label for="fDraft">Draft ලෙස සුරකින්න (පොදුවේ නොපෙන්වන්න)</label>
+      </div>
+      <button class="btn" id="addBtn" style="width:auto; padding:12px 28px;">එකතු කරන්න</button>
     </div>
 
-    <details class="settings">
-      <summary>සැකසුම් (වගු නාම, ආදිය)</summary>
-      <div class="box">
-        <div class="field" style="margin-bottom:10px;">
-          <label for="tableNameInput">Supabase වගු නාමය (words table)</label>
-          <input type="text" id="tableNameInput" value="word_aliases">
-        </div>
-        <div class="field" style="margin-bottom:10px;">
-          <label for="authTableNameInput">වගු නාමය</label>
-          <input type="text" id="authTableNameInput" value="authors">
-        </div>
-        <button class="btn secondary ui" id="saveTableName" type="button">යාවත්කාලීන කර නැවත පූරණය කරන්න</button>
-        <div id="altColNotice"></div>
-        <div id="authorColNotice"></div>
-      </div>
-    </details>
-
-    <div id="adminBanner"></div>
-
-    <form id="entryForm">
-      <h2 class="ui" id="formTitle">නව වචනයක් එකතු කරන්න</h2>
-      <input type="hidden" id="editId">
-      <div class="row2">
-        <div class="field">
-          <label class="ui" for="fWord">වචනය *</label>
-          <input class="ui" type="text" id="fWord" required>
-        </div>
-        <div class="field">
-          <label class="ui" for="fCategory">Category</label>
-          <input class="ui" type="text" id="fCategory" list="categoryOptions" placeholder="උදා: සාමාන්‍ය">
-          <datalist id="categoryOptions"></datalist>
-        </div>
-      </div>
-      <div class="field">
-        <label class="ui" for="fMeaning">අර්ථය *</label>
-        <textarea class="ui" id="fMeaning" required></textarea>
-      </div>
-      <div class="field">
-        <label class="ui" for="fSummary">විස්තරය / සාරාංශය</label>
-        <textarea class="ui" id="fSummary"></textarea>
-      </div>
-      <div class="row2">
-        <div class="field" id="altField">
-          <label class="ui" for="fAlt">විකල්ප වචන (කොමා වලින් වෙන් කරන්න)</label>
-          <input class="ui" type="text" id="fAlt" placeholder="උදා: වචන1, වචන2">
-        </div>
-        <div class="field">
-          <label class="ui" for="fSource">Source</label>
-          <input class="ui" type="text" id="fSource" placeholder="මූලාශ්‍රය">
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label class="ui" for="fStatus">තත්ත්වය</label>
-          <select class="ui" id="fStatus">
-            <option value="draft">කෙටුම්පත (Draft)</option>
-            <option value="published">ප්‍රකාශිත (Published)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label class="ui">Author</label>
-          <input class="ui" type="text" id="fAuthorDisplay" disabled>
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="button" class="btn secondary ui" id="cancelEdit" style="display:none;">අවලංගු කරන්න</button>
-        <button type="submit" class="btn ui" id="submitBtn">එකතු කරන්න</button>
-      </div>
-    </form>
-
-    <div class="admin-toolbar">
-      <input class="ui" type="search" id="adminSearch" placeholder="සොයන්න: වචනය හෝ අර්ථය...">
-      <select class="ui" id="adminCategoryFilter"><option value="">සියලුම categories</option></select>
-      <select class="ui" id="adminStatusFilter">
-        <option value="">සියලුම තත්ත්ව</option>
-        <option value="draft">කෙටුම්පත</option>
-        <option value="published">ප්‍රකාශිත</option>
-      </select>
-      <button class="btn secondary ui" id="refreshBtn" type="button">නැවත පූරණය</button>
+    <div class="section-title">
+      <h2>මා ඇතුළත් කළ දත්ත</h2>
+      <span id="countLabel"></span>
     </div>
+    <div id="entriesList"></div>
 
-    <div id="adminList"><div class="loading ui">පූරණය වෙමින්...</div></div>
+  </div>
+</main>
 
-    </div><!-- /adminContent -->
-  </section>
+<footer>කලාපීය ගුරු සහයෝගීතාව</footer>
+
+<!-- Edit Modal -->
+<div class="overlay" id="editOverlay">
+  <div class="modal">
+    <h3>ඇතුළත් කිරීම සංස්කරණය කරන්න</h3>
+    <input type="hidden" id="editId">
+    <label>වචනය</label>
+    <input type="text" id="editWord">
+    <label>කැටගරිය</label>
+    <input type="text" id="editCategory">
+    <label>අර්ථ විස්තරය</label>
+    <textarea id="editMeaning"></textarea>
+    <label>සාරාංශය</label>
+    <textarea id="editSummary"></textarea>
+    <label>මූලාශ්‍රය</label>
+    <input type="text" id="editSource">
+    <div class="modal-actions">
+      <button class="btn ghost" id="cancelEdit">අවලංගු කරන්න</button>
+      <button class="btn secondary" id="saveEdit" style="width:auto;">සුරකින්න</button>
+    </div>
+  </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-(function(){
-  const SUPABASE_URL = "https://uqgzlaxsnknheoerbfus.supabase.co";
-  const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxZ3psYXhzbmtuaGVvZXJiZnVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM2MTUsImV4cCI6MjA3OTI4MzYxNX0.IYWZ7ukx8J-GJMWy7cMk2BWnmzJmJjjE93yEmJie7nQ";
-  const REST_BASE = SUPABASE_URL + "/rest/v1/";
+// ---------------- CONFIG ----------------
+const SUPABASE_URL = "https://uqgzlaxsnknheoerbfus.supabase.co";
+const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxZ3psYXhzbmtuaGVvZXJiZnVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM2MTUsImV4cCI6MjA3OTI4MzYxNX0.IYWZ7ukx8J-GJMWy7cMk2BWnmzJmJjjE93yEmJie7nQ";
+const REST = `${SUPABASE_URL}/rest/v1`;
+const HEADERS = {
+  apikey: ANON_KEY,
+  Authorization: `Bearer ${ANON_KEY}`,
+  "Content-Type": "application/json"
+};
 
-  let TABLE = "word_aliases";
-  let AUTH_TABLE = "authors";
-  let entries = [];
-  let hasAltColumn = true;
-  let hasAuthorColumn = true;
-  let editingId = null;
-  let currentUser = null; // { username, password }
+// disable right click fully
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  if (e.key === "F12") e.preventDefault();
+});
 
-  const $ = (id) => document.getElementById(id);
+let session = null;
+try { session = JSON.parse(sessionStorage.getItem("wa_admin_session") || "null"); } catch(e){}
 
-  function headers(extra){
-    return Object.assign({
-      "apikey": ANON_KEY,
-      "Authorization": "Bearer " + ANON_KEY,
-      "Content-Type": "application/json"
-    }, extra || {});
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+function renderTopRight(){
+  const slot = document.getElementById("topRightSlot");
+  if (session){
+    slot.innerHTML = `<span class="pill">${escapeHtml(session.username)}</span><button class="logout" id="logoutBtn">ඉවත් වන්න</button>`;
+    document.getElementById("logoutBtn").onclick = logout;
+  } else {
+    slot.innerHTML = "";
   }
+}
 
-  async function sbGetFrom(table, query){
-    const res = await fetch(REST_BASE + table + query, { headers: headers() });
-    if(!res.ok){
-      const body = await res.text();
-      throw new Error(body || res.statusText);
-    }
-    return res.json();
+function escapeHtml(str){
+  return String(str ?? "").replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[m]));
+}
+
+function logout(){
+  sessionStorage.removeItem("wa_admin_session");
+  session = null;
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("loginWrap").style.display = "block";
+  renderTopRight();
+}
+
+async function login(){
+  const username = document.getElementById("loginUser").value.trim();
+  const password = document.getElementById("loginPass").value;
+  const errEl = document.getElementById("loginError");
+  errEl.textContent = "";
+  if (!username || !password){
+    errEl.textContent = "පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න.";
+    return;
   }
-
-  async function sbGet(query){
-    const res = await fetch(REST_BASE + TABLE + query, { headers: headers() });
-    if(!res.ok){
-      const body = await res.text();
-      throw new Error(body || res.statusText);
-    }
-    return res.json();
-  }
-
-  async function sbWrite(method, body, filter){
-    const res = await fetch(REST_BASE + TABLE + (filter || ""), {
-      method,
-      headers: headers({ "Prefer": "return=representation" }),
-      body: body ? JSON.stringify(body) : undefined
-    });
-    const text = await res.text();
-    let json = null;
-    try { json = text ? JSON.parse(text) : null; } catch(e){ /* not json */ }
-    if(!res.ok){
-      const msg = (json && (json.message || json.hint)) || text || res.statusText;
-      const err = new Error(msg);
-      err.raw = json;
-      throw err;
-    }
-    return json;
-  }
-
-  // ---------- table / column config ----------
-  async function loadConfig(){
-    try{
-      const stored = await window.storage.get("config:table_name");
-      if(stored && stored.value) TABLE = stored.value;
-    }catch(e){ /* no stored value yet, keep default */ }
-    try{
-      const storedAuth = await window.storage.get("config:auth_table_name");
-      if(storedAuth && storedAuth.value) AUTH_TABLE = storedAuth.value;
-    }catch(e){ /* no stored value yet, keep default */ }
-    $("tableNameInput").value = TABLE;
-    $("authTableNameInput").value = AUTH_TABLE;
-  }
-
-  async function checkAltColumn(){
-    try{
-      await sbGet("?select=alternatives&limit=1");
-      hasAltColumn = true;
-      $("altColNotice").innerHTML = "";
-    }catch(e){
-      hasAltColumn = false;
-      $("altColNotice").innerHTML =
-        '<div class="banner warn" style="margin-top:10px;">' +
-        '"alternatives" තීරුව මෙම වගුවේ නොමැත — විකල්ප වචන field එක අක්‍රිය කර ඇත. ' +
-        'එය සක්‍රීය කිරීමට පහත SQL එක Supabase SQL Editor එකේ run කරන්න:' +
-        '<code>ALTER TABLE ' + escapeHtml(TABLE) + ' ADD COLUMN alternatives text;</code></div>';
-    }
-    $("altField").style.display = hasAltColumn ? "" : "none";
-  }
-
-  async function checkAuthorColumn(){
-    try{
-      await sbGet("?select=author&limit=1");
-      hasAuthorColumn = true;
-      $("authorColNotice").innerHTML = "";
-    }catch(e){
-      hasAuthorColumn = false;
-      $("authorColNotice").innerHTML =
-        '<div class="banner warn" style="margin-top:10px;">' +
-        '"author" තීරුව "' + escapeHtml(TABLE) + '" වගුවේ නොමැත — ඇතුළත් කරන entries සමඟ author නම save වන්නේ නැහැ. ' +
-        'එය සක්‍රීය කිරීමට පහත SQL එක Supabase SQL Editor එකේ run කරන්න:' +
-        '<code>ALTER TABLE ' + escapeHtml(TABLE) + ' ADD COLUMN author text;</code></div>';
-    }
-  }
-
-  // ---------- auth ----------
-  function showLoginBanner(message, type){
-    const el = $("loginBanner");
-    if(!message){ el.innerHTML = ""; return; }
-    el.innerHTML = '<div class="banner ' + (type||"error") + ' ui">' + escapeHtml(message) + '</div>';
-  }
-
-  function showLoggedIn(){
-    $("loginBox").style.display = "none";
-    $("adminContent").style.display = "";
-    $("sessionUser").textContent = currentUser.username;
-    $("fAuthorDisplay").value = currentUser.username;
-  }
-
-  function showLoggedOut(){
-    $("loginBox").style.display = "";
-    $("adminContent").style.display = "none";
-  }
-
-  async function attemptLogin(username, password){
-    const rows = await sbGetFrom(
-      AUTH_TABLE,
-      "?select=username,password&username=eq." + encodeURIComponent(username) + "&limit=1"
-    );
-    if(rows.length === 0 || String(rows[0].password) !== String(password)){
-      throw new Error("පරිශීලක නාමය හෝ මුරපදය වැරදියි.");
-    }
-    return { username: rows[0].username, password: rows[0].password };
-  }
-
-  $("loginForm").addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    const username = $("loginUsername").value.trim();
-    const password = $("loginPassword").value;
-    if(!username || !password) return;
-    showLoginBanner("", null);
-    $("loginBtn").disabled = true;
-    try{
-      const user = await attemptLogin(username, password);
-      currentUser = user;
-      try{ await window.storage.set("auth:session", JSON.stringify(user)); }catch(e){ /* ignore */ }
-      showLoggedIn();
-      await loadEntries();
-    }catch(e){
-      showLoginBanner(e.message || "පිවිසීමට නොහැකි විය.", "error");
-    }finally{
-      $("loginBtn").disabled = false;
-    }
-  });
-
-  $("logoutBtn").addEventListener("click", async () => {
-    currentUser = null;
-    try{ await window.storage.delete("auth:session"); }catch(e){ /* ignore */ }
-    $("loginUsername").value = "";
-    $("loginPassword").value = "";
-    showLoggedOut();
-  });
-
-  async function tryRestoreSession(){
-    try{
-      const stored = await window.storage.get("auth:session");
-      if(!stored || !stored.value) return false;
-      const saved = JSON.parse(stored.value);
-      const user = await attemptLogin(saved.username, saved.password);
-      currentUser = user;
-      showLoggedIn();
-      return true;
-    }catch(e){
-      try{ await window.storage.delete("auth:session"); }catch(e2){ /* ignore */ }
-      return false;
-    }
-  }
-
-  // ---------- data loading ----------
-  async function loadEntries(){
-    $("adminList").innerHTML = '<div class="loading ui">පූරණය වෙමින්...</div>';
-    $("publicList").innerHTML = '<div class="loading ui">පූරණය වෙමින්...</div>';
-    try{
-      entries = await sbGet("?select=*&order=created_at.desc&limit=2000");
-      renderCategoryOptions();
-      renderAdminList();
-      renderPublicList();
-      showBanner("adminBanner", "", null);
-    }catch(e){
-      const msg = 'දත්ත ලබාගැනීමට නොහැකි විය: ' + escapeHtml(e.message) +
-        '. වගු නාමය "' + escapeHtml(TABLE) + '" නිවැරදිදැයි "සැකසුම්" හරහා පරීක්ෂා කරන්න.';
-      $("adminList").innerHTML = '<div class="empty ui">' + msg + '</div>';
-      $("publicList").innerHTML = '<div class="empty ui">' + msg + '</div>';
-    }
-  }
-
-  function showBanner(elId, message, type){
-    const el = $(elId);
-    if(!message){ el.innerHTML = ""; return; }
-    el.innerHTML = '<div class="banner ' + (type||"ok") + ' ui">' + escapeHtml(message) + '</div>';
-    if(type !== "error"){
-      setTimeout(()=>{ if(el.firstChild) el.innerHTML=""; }, 4000);
-    }
-  }
-
-  function escapeHtml(s){
-    return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[c]));
-  }
-
-  function fmtDate(d){
-    if(!d) return "";
-    try{
-      const dt = new Date(d);
-      const pad = n => String(n).padStart(2,"0");
-      return dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate());
-    }catch(e){ return d; }
-  }
-
-  // ---------- category helpers ----------
-  function distinctCategories(list){
-    const set = new Set();
-    list.forEach(e => { if(e.category) set.add(e.category); });
-    return Array.from(set).sort();
-  }
-
-  function renderCategoryOptions(){
-    const cats = distinctCategories(entries);
-    $("categoryOptions").innerHTML = cats.map(c => '<option value="'+escapeHtml(c)+'">').join("");
-
-    const filterSel = $("adminCategoryFilter");
-    const currentVal = filterSel.value;
-    filterSel.innerHTML = '<option value="">සියලුම categories</option>' +
-      cats.map(c => '<option value="'+escapeHtml(c)+'">'+escapeHtml(c)+'</option>').join("");
-    filterSel.value = currentVal;
-  }
-
-  // ---------- ADMIN rendering ----------
-  function filteredAdminEntries(){
-    const q = $("adminSearch").value.trim().toLowerCase();
-    const cat = $("adminCategoryFilter").value;
-    const status = $("adminStatusFilter").value;
-    return entries.filter(e => {
-      // Only ever show entries created by the currently logged-in author.
-      if(!currentUser || e.author !== currentUser.username) return false;
-      if(cat && e.category !== cat) return false;
-      if(status && e.status !== status) return false;
-      if(q){
-        const hay = ((e.word||"") + " " + (e.meaning||"") + " " + (e.summary||"")).toLowerCase();
-        if(!hay.includes(q)) return false;
-      }
-      return true;
-    });
-  }
-
-  function renderAdminList(){
-    const list = filteredAdminEntries();
-    if(list.length === 0){
-      $("adminList").innerHTML = '<div class="empty ui">ඔබ විසින් තවම වචන එකතු කර නොමැත. නව වචනයක් එකතු කරන්න.</div>';
+  try {
+    const res = await fetch(`${REST}/authors?username=eq.${encodeURIComponent(username)}&select=id,username,password`, { headers: HEADERS });
+    if (!res.ok) throw new Error("network");
+    const rows = await res.json();
+    if (rows.length === 0 || rows[0].password !== password){
+      errEl.textContent = "වැරදි පරිශීලක නාමයක් හෝ මුරපදයක්.";
       return;
     }
-    let html = '<table class="entries"><thead><tr>' +
-      '<th>වචනය</th><th>අර්ථය</th><th>Category</th><th>තත්ත්වය</th><th>යාවත්කාලීන</th><th></th>' +
-      '</tr></thead><tbody>';
-    list.forEach(e => {
-      html += '<tr>' +
-        '<td class="word-cell">' + escapeHtml(e.word) + '</td>' +
-        '<td class="meaning-cell">' + escapeHtml(truncate(e.meaning, 60)) + '</td>' +
-        '<td class="ui">' + escapeHtml(e.category || "—") + '</td>' +
-        '<td><span class="badge ' + (e.status==="published"?"published":"draft") + ' ui">' +
-            (e.status==="published" ? "ප්‍රකාශිත" : "කෙටුම්පත") + '</span></td>' +
-        '<td class="ui">' + fmtDate(e.updated_at || e.created_at) + '</td>' +
-        '<td class="actions-cell ui">' +
-          '<button class="link" data-action="edit" data-id="'+e.id+'">සංස්කරණය</button>' +
-          '<button class="link" data-action="toggle" data-id="'+e.id+'">' +
-             (e.status==="published" ? "Draft කරන්න" : "Publish කරන්න") + '</button>' +
-          '<button class="link" data-action="delete" data-id="'+e.id+'" style="color:var(--danger);">මකන්න</button>' +
-        '</td>' +
-      '</tr>';
-    });
-    html += '</tbody></table>';
-    $("adminList").innerHTML = html;
+    session = { id: rows[0].id, username: rows[0].username };
+    sessionStorage.setItem("wa_admin_session", JSON.stringify(session));
+    document.getElementById("loginWrap").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    renderTopRight();
+    loadEntries();
+  } catch(e){
+    errEl.textContent = "සම්බන්ධතාවයේ දෝෂයක්. නැවත උත්සාහ කරන්න.";
   }
+}
 
-  function truncate(s, n){
-    s = s || "";
-    return s.length > n ? s.slice(0,n) + "…" : s;
-  }
-
-  $("adminList").addEventListener("click", (ev) => {
-    const btn = ev.target.closest("button[data-action]");
-    if(!btn) return;
-    const id = btn.getAttribute("data-id");
-    const action = btn.getAttribute("data-action");
-    const entry = entries.find(e => String(e.id) === String(id));
-    // Guard: never allow an action on an entry that isn't this author's own,
-    // even if the id somehow slipped through from elsewhere.
-    if(!entry || !currentUser || entry.author !== currentUser.username) return;
-    if(action === "edit") startEdit(entry);
-    if(action === "delete") doDelete(entry);
-    if(action === "toggle") doToggleStatus(entry);
-  });
-
-  ["adminSearch","adminCategoryFilter","adminStatusFilter"].forEach(id => {
-    $(id).addEventListener("input", renderAdminList);
-    $(id).addEventListener("change", renderAdminList);
-  });
-
-  $("refreshBtn").addEventListener("click", loadEntries);
-
-  // ---------- form (create / edit) ----------
-  function resetForm(){
-    editingId = null;
-    $("formTitle").textContent = "නව වචනයක් එකතු කරන්න";
-    $("submitBtn").textContent = "එකතු කරන්න";
-    $("cancelEdit").style.display = "none";
-    $("editId").value = "";
-    $("fWord").value = "";
-    $("fCategory").value = "";
-    $("fMeaning").value = "";
-    $("fSummary").value = "";
-    $("fAlt").value = "";
-    $("fSource").value = "";
-    $("fStatus").value = "draft";
-    $("fAuthorDisplay").value = currentUser ? currentUser.username : "";
-  }
-
-  function startEdit(entry){
-    editingId = entry.id;
-    $("formTitle").textContent = '"' + entry.word + '" සංස්කරණය කරන්න';
-    $("submitBtn").textContent = "යාවත්කාලීන කරන්න";
-    $("cancelEdit").style.display = "";
-    $("editId").value = entry.id;
-    $("fWord").value = entry.word || "";
-    $("fCategory").value = entry.category || "";
-    $("fMeaning").value = entry.meaning || "";
-    $("fSummary").value = entry.summary || "";
-    $("fAlt").value = entry.alternatives || "";
-    $("fSource").value = entry.source || "";
-    $("fStatus").value = entry.status === "published" ? "published" : "draft";
-    $("fAuthorDisplay").value = currentUser ? currentUser.username : (entry.author || "");
-    $("entryForm").scrollIntoView({ behavior:"smooth", block:"start" });
-  }
-
-  $("cancelEdit").addEventListener("click", resetForm);
-
-  $("entryForm").addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    const word = $("fWord").value.trim();
-    const meaning = $("fMeaning").value.trim();
-    if(!word || !meaning){ return; }
-
-    const payload = {
-      word,
-      meaning,
-      summary: $("fSummary").value.trim() || null,
-      category: $("fCategory").value.trim() || null,
-      source: $("fSource").value.trim() || null,
-      status: $("fStatus").value,
-      updated_at: new Date().toISOString()
-    };
-    if(hasAltColumn){
-      payload.alternatives = $("fAlt").value.trim() || null;
-    }
-    if(hasAuthorColumn && currentUser){
-      payload.author = currentUser.username;
-    }
-
-    // When editing, only ever allow updating an entry that belongs to the
-    // logged-in author.
-    if(editingId){
-      const owned = entries.find(e => String(e.id) === String(editingId));
-      if(!owned || !currentUser || owned.author !== currentUser.username){
-        showBanner("adminBanner", "ඔබට මෙම ප්‍රවේශය සංස්කරණය කිරීමට අවසර නැත.", "error");
-        return;
-      }
-    }
-
-    const submitBtn = $("submitBtn");
-    submitBtn.disabled = true;
-    try{
-      if(editingId){
-        await sbWrite("PATCH", payload, "?id=eq." + encodeURIComponent(editingId));
-        showBanner("adminBanner", "යාවත්කාලීන කරන ලදී.", "ok");
-      } else {
-        payload.created_at = new Date().toISOString();
-        await sbWrite("POST", payload, "");
-        showBanner("adminBanner", "නව වචනය එකතු කරන ලදී.", "ok");
-      }
-      resetForm();
-      await loadEntries();
-    }catch(e){
-      showBanner("adminBanner", "සුරැකීමට නොහැකි විය: " + e.message, "error");
-    }finally{
-      submitBtn.disabled = false;
-    }
-  });
-
-  async function doDelete(entry){
-    if(!confirm('"' + entry.word + '" මකා දැමීමට විශ්වාසද?')) return;
-    try{
-      await sbWrite("DELETE", null, "?id=eq." + encodeURIComponent(entry.id));
-      showBanner("adminBanner", "ප්‍රවේශය මකා දමන ලදී.", "ok");
-      if(editingId === entry.id) resetForm();
-      await loadEntries();
-    }catch(e){
-      showBanner("adminBanner", "මකා දැමීමට නොහැකි විය: " + e.message, "error");
-    }
-  }
-
-  async function doToggleStatus(entry){
-    const newStatus = entry.status === "published" ? "draft" : "published";
-    try{
-      await sbWrite("PATCH", { status:newStatus, updated_at:new Date().toISOString() },
-        "?id=eq." + encodeURIComponent(entry.id));
-      await loadEntries();
-    }catch(e){
-      showBanner("adminBanner", "තත්ත්වය වෙනස් කිරීමට නොහැකි විය: " + e.message, "error");
-    }
-  }
-
-  // ---------- PUBLIC rendering ----------
-  let activeCategory = "";
-
-  function renderPublicCategoryChips(){
-    const cats = distinctCategories(entries.filter(e => e.status === "published"));
-    let html = '<button class="chip ui'+(activeCategory===""?" active":"")+'" data-cat="">සියල්ල</button>';
-    cats.forEach(c => {
-      html += '<button class="chip ui'+(activeCategory===c?" active":"")+'" data-cat="'+escapeHtml(c)+'">'+escapeHtml(c)+'</button>';
-    });
-    $("publicCategoryChips").innerHTML = html;
-  }
-
-  $("publicCategoryChips").addEventListener("click", (ev) => {
-    const btn = ev.target.closest("button[data-cat]");
-    if(!btn) return;
-    activeCategory = btn.getAttribute("data-cat");
-    renderPublicCategoryChips();
-    renderPublicList();
-  });
-
-  $("publicSearch").addEventListener("input", renderPublicList);
-
-  function renderPublicList(){
-    renderPublicCategoryChips();
-    const q = $("publicSearch").value.trim().toLowerCase();
-    const list = entries.filter(e => {
-      if(e.status !== "published") return false;
-      if(activeCategory && e.category !== activeCategory) return false;
-      if(q){
-        const hay = ((e.word||"") + " " + (e.meaning||"") + " " + (e.summary||"")).toLowerCase();
-        if(!hay.includes(q)) return false;
-      }
-      return true;
-    });
-    if(list.length === 0){
-      $("publicList").innerHTML = '<div class="empty ui">ගැලපෙන වචන හමු නොවීය.</div>';
+async function loadEntries(){
+  const list = document.getElementById("entriesList");
+  list.innerHTML = `<div class="empty-state">පූරණය වෙමින්...</div>`;
+  try {
+    const res = await fetch(`${REST}/word_aliases?author_id=eq.${session.id}&select=*&order=created_at.desc`, { headers: HEADERS });
+    const rows = await res.json();
+    document.getElementById("countLabel").textContent = `සම්පූර්ණ: ${rows.length}`;
+    if (rows.length === 0){
+      list.innerHTML = `<div class="empty-state">ඔබ තවම කිසිදු වචනයක් ඇතුළත් කර නොමැත.</div>`;
       return;
     }
-    let html = '<div class="card-grid">';
-    list.forEach(e => {
-      html += '<div class="word-card">';
-      if(e.category) html += '<span class="cat">' + escapeHtml(e.category) + '</span>';
-      html += '<p class="w">' + escapeHtml(e.word) + '</p>';
-      html += '<p class="m">' + escapeHtml(e.meaning) + '</p>';
-      if(e.summary) html += '<p class="s">' + escapeHtml(e.summary) + '</p>';
-      if(e.alternatives) html += '<p class="alt">විකල්ප: ' + escapeHtml(e.alternatives) + '</p>';
-      if(e.source) html += '<p class="src">මූලාශ්‍රය: ' + escapeHtml(e.source) + '</p>';
-      if(e.author) html += '<p class="author">— ' + escapeHtml(e.author) + '</p>';
-      html += '</div>';
+    list.innerHTML = rows.map(entryTemplate).join("");
+    rows.forEach(r => {
+      document.getElementById(`edit-${r.id}`).onclick = () => openEdit(r);
+      document.getElementById(`del-${r.id}`).onclick = () => deleteEntry(r.id);
+      document.getElementById(`draft-${r.id}`).onclick = () => toggleDraft(r);
     });
-    html += '</div>';
-    $("publicList").innerHTML = html;
+  } catch(e){
+    list.innerHTML = `<div class="empty-state">දත්ත පූරණය කිරීමේදී දෝෂයක් ඇති විය.</div>`;
   }
+}
 
-  // ---------- tabs ----------
-  function switchView(view){
-    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-    document.querySelectorAll("nav.tabs button").forEach(b => b.classList.remove("active"));
-    $("view" + (view === "admin" ? "Admin" : "Public")).classList.add("active");
-    $("tab" + (view === "admin" ? "Admin" : "Public")).classList.add("active");
+function entryTemplate(r){
+  const isDraft = r.status === "draft";
+  const date = r.created_at ? new Date(r.created_at).toLocaleDateString("si-LK") : "";
+  return `
+  <div class="entry ${isDraft ? "draft" : ""}">
+    <div class="entry-top">
+      <div class="entry-word">${escapeHtml(r.word)}</div>
+      <span class="status-tag ${isDraft ? "draft" : ""}">${isDraft ? "Draft" : "Published"}</span>
+    </div>
+    <div class="entry-meta">
+      <div><b>අර්ථ විස්තරය:</b> ${escapeHtml(r.meaning || "-")}</div>
+      <div><b>සාරාංශය:</b> ${escapeHtml(r.summary || "-")}</div>
+      <div><b>කැටගරිය:</b> ${escapeHtml(r.category || "-")} &nbsp; | &nbsp; <b>මූලාශ්‍රය:</b> ${escapeHtml(r.source || "-")} &nbsp; | &nbsp; ${date}</div>
+    </div>
+    <div class="entry-actions">
+      <button class="btn ghost" id="edit-${r.id}">සංස්කරණය</button>
+      <button class="btn secondary" id="draft-${r.id}">${isDraft ? "Publish කරන්න" : "Draft කරන්න"}</button>
+      <button class="btn danger" id="del-${r.id}">මකන්න</button>
+    </div>
+  </div>`;
+}
+
+async function addEntry(){
+  const word = document.getElementById("fWord").value.trim();
+  const meaning = document.getElementById("fMeaning").value.trim();
+  const summary = document.getElementById("fSummary").value.trim();
+  const category = document.getElementById("fCategory").value.trim();
+  const source = document.getElementById("fSource").value.trim();
+  const isDraft = document.getElementById("fDraft").checked;
+
+  if (!word || !meaning){
+    showToast("වචනය සහ අර්ථ විස්තරය අවශ්‍යයි.");
+    return;
   }
-  $("tabPublic").addEventListener("click", () => switchView("public"));
-  $("tabAdmin").addEventListener("click", () => switchView("admin"));
+  try {
+    const res = await fetch(`${REST}/word_aliases`, {
+      method: "POST",
+      headers: { ...HEADERS, Prefer: "return=representation" },
+      body: JSON.stringify({
+        word, meaning, summary, category, source,
+        author: session.username,
+        author_id: session.id,
+        status: isDraft ? "draft" : "published"
+      })
+    });
+    if (!res.ok) throw new Error("insert failed");
+    ["fWord","fMeaning","fSummary","fCategory","fSource"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("fDraft").checked = false;
+    showToast("සාර්ථකව එකතු කරන ලදී.");
+    loadEntries();
+  } catch(e){
+    showToast("එකතු කිරීමේදී දෝෂයක් ඇති විය.");
+  }
+}
 
-  // ---------- settings ----------
-  $("saveTableName").addEventListener("click", async () => {
-    const val = $("tableNameInput").value.trim();
-    const authVal = $("authTableNameInput").value.trim();
-    if(!val || !authVal) return;
-    TABLE = val;
-    AUTH_TABLE = authVal;
-    try{ await window.storage.set("config:table_name", val); }catch(e){ /* ignore */ }
-    try{ await window.storage.set("config:auth_table_name", authVal); }catch(e){ /* ignore */ }
-    await checkAltColumn();
-    await checkAuthorColumn();
-    await loadEntries();
-  });
+function openEdit(r){
+  document.getElementById("editId").value = r.id;
+  document.getElementById("editWord").value = r.word || "";
+  document.getElementById("editCategory").value = r.category || "";
+  document.getElementById("editMeaning").value = r.meaning || "";
+  document.getElementById("editSummary").value = r.summary || "";
+  document.getElementById("editSource").value = r.source || "";
+  document.getElementById("editOverlay").classList.add("show");
+}
 
-  // ---------- init ----------
-  (async function init(){
-    switchView("public");
-    showLoggedOut();
-    await loadConfig();
-    await checkAltColumn();
-    await checkAuthorColumn();
-    await loadEntries();
-    await tryRestoreSession();
-  })();
-})();
+async function saveEdit(){
+  const id = document.getElementById("editId").value;
+  const payload = {
+    word: document.getElementById("editWord").value.trim(),
+    category: document.getElementById("editCategory").value.trim(),
+    meaning: document.getElementById("editMeaning").value.trim(),
+    summary: document.getElementById("editSummary").value.trim(),
+    source: document.getElementById("editSource").value.trim(),
+    updated_at: new Date().toISOString()
+  };
+  try {
+    const res = await fetch(`${REST}/word_aliases?id=eq.${id}&author_id=eq.${session.id}`, {
+      method: "PATCH",
+      headers: HEADERS,
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("update failed");
+    document.getElementById("editOverlay").classList.remove("show");
+    showToast("සංස්කරණය සුරැකිණි.");
+    loadEntries();
+  } catch(e){
+    showToast("සංස්කරණය අසාර්ථක විය.");
+  }
+}
+
+async function deleteEntry(id){
+  if (!confirm("මෙම ඇතුළත් කිරීම මකා දැමීමට අවශ්‍ය බව ඔබට විශ්වාසද?")) return;
+  try {
+    const res = await fetch(`${REST}/word_aliases?id=eq.${id}&author_id=eq.${session.id}`, {
+      method: "DELETE",
+      headers: HEADERS
+    });
+    if (!res.ok) throw new Error("delete failed");
+    showToast("මකා දමන ලදී.");
+    loadEntries();
+  } catch(e){
+    showToast("මකා දැමීම අසාර්ථක විය.");
+  }
+}
+
+async function toggleDraft(r){
+  const newStatus = r.status === "draft" ? "published" : "draft";
+  try {
+    const res = await fetch(`${REST}/word_aliases?id=eq.${r.id}&author_id=eq.${session.id}`, {
+      method: "PATCH",
+      headers: HEADERS,
+      body: JSON.stringify({ status: newStatus, updated_at: new Date().toISOString() })
+    });
+    if (!res.ok) throw new Error("toggle failed");
+    showToast(newStatus === "draft" ? "Draft තත්ත්වයට මාරු කරන ලදී." : "Publish කරන ලදී.");
+    loadEntries();
+  } catch(e){
+    showToast("තත්ත්වය වෙනස් කිරීම අසාර්ථක විය.");
+  }
+}
+
+document.getElementById("loginBtn").addEventListener("click", login);
+document.getElementById("loginPass").addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+document.getElementById("addBtn").addEventListener("click", addEntry);
+document.getElementById("cancelEdit").addEventListener("click", () => document.getElementById("editOverlay").classList.remove("show"));
+document.getElementById("saveEdit").addEventListener("click", saveEdit);
+
+// init
+renderTopRight();
+if (session){
+  document.getElementById("loginWrap").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+  loadEntries();
+}
 </script>
 </body>
 </html>
