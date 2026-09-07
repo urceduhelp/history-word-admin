@@ -3,374 +3,440 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>විෂයානුබද්ධ වාග්මාලාව</title>
+<title>වචන කෝෂය</title>
 <style>
   :root{
-    --ink:#16302B;
-    --ink-deep:#0E211D;
-    --gold:#C89B3C;
-    --gold-soft:#DDBE73;
-    --parchment:#F4EEDE;
-    --parchment-raised:#FBF8EF;
-    --clay:#8C4A32;
-    --text:#201C13;
-    --text-soft:#645C48;
-    --line:#E1D8BF;
+    --paper:#EFE9DC;
+    --paper-raised:#F7F3E9;
+    --ink:#26221A;
+    --ink-soft:#5B564A;
+    --line:#D9D1BE;
+    --maroon:#7A2E2E;
+    --maroon-dark:#5E2222;
+    --brass:#A9822C;
+    --sage:#5C6E52;
+    --draft:#6B6455;
+    --danger:#9A3324;
+    --card-shadow: 0 1px 0 rgba(38,34,26,0.06);
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
   body{
-    margin:0;
-    background:var(--parchment);
-    color:var(--text);
+    background:var(--paper);
+    color:var(--ink);
     font-family: Georgia, "Noto Serif Sinhala", "Iskoola Pota", serif;
+    line-height:1.5;
+    min-height:100vh;
   }
-  .ui{ font-family: -apple-system,"Segoe UI","Noto Sans Sinhala","Iskoola Pota",sans-serif; }
+  .ui{font-family: -apple-system, "Segoe UI", "Noto Sans Sinhala", "Iskoola Pota", sans-serif;}
 
-  /* ---------------- HERO ---------------- */
-  .hero{
-    background: radial-gradient(120% 160% at 15% 0%, #1D3B34 0%, var(--ink) 45%, var(--ink-deep) 100%);
-    color: var(--parchment-raised);
-    padding: 64px 24px 56px;
-    text-align:left;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero::after{
-    content:"";
-    position:absolute; right:-60px; top:-60px;
-    width:280px; height:280px; border-radius:50%;
-    background: radial-gradient(circle, rgba(200,155,60,0.22), transparent 70%);
-  }
-  .hero-inner{ max-width:760px; margin:0 auto; position:relative; }
-  .hero-eyebrow{
-    display:inline-block;
-    font-size:13px;
-    color: var(--gold-soft);
-    letter-spacing:0.3px;
-    margin-bottom:14px;
-    opacity:0;
-    animation: rise 0.6s ease forwards;
-  }
-  .hero h1{
-    font-size:44px;
-    line-height:1.15;
-    margin:0 0 12px;
-    font-weight:700;
-    opacity:0;
-    animation: rise 0.7s ease 0.08s forwards;
-  }
-  .hero p.lead{
-    font-size:16px;
-    color:#D9D3C0;
-    max-width:520px;
-    margin:0 0 30px;
-    opacity:0;
-    animation: rise 0.7s ease 0.16s forwards;
-  }
-  @keyframes rise{
-    from{ opacity:0; transform:translateY(10px); }
-    to{ opacity:1; transform:translateY(0); }
-  }
+  #app{max-width:920px; margin:0 auto; padding:28px 20px 80px;}
 
-  .search-wrap{
-    position:relative;
+  header.top{
+    border-bottom:2px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:22px;
     display:flex;
-    gap:10px;
-    max-width:560px;
-    opacity:0;
-    animation: rise 0.7s ease 0.24s forwards;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
   }
-  .search-wrap input[type=search]{
-    flex:1;
-    padding:14px 18px;
-    border-radius:999px;
-    border:1px solid rgba(244,238,222,0.25);
-    background:rgba(244,238,222,0.08);
-    color:var(--parchment-raised);
-    font-size:15px;
-  }
-  .search-wrap input[type=search]::placeholder{ color:#B8B19B; }
-  .search-wrap input[type=search]:focus{
-    outline:none; border-color:var(--gold); background:rgba(244,238,222,0.13);
-  }
-  .search-wrap button{
-    padding:0 22px;
-    border-radius:999px;
-    border:1px solid var(--gold);
-    background:var(--gold);
-    color:var(--ink-deep);
+  header.top h1{
+    margin:0;
+    font-size:28px;
     font-weight:700;
+    letter-spacing:0.2px;
+  }
+  header.top .sub{
+    font-family: -apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+
+  nav.tabs{
+    display:flex;
+    gap:2px;
+    font-family: -apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+  }
+  nav.tabs button{
+    background:transparent;
+    border:1px solid var(--ink);
+    border-bottom:none;
+    padding:9px 18px;
     font-size:14px;
     cursor:pointer;
+    color:var(--ink);
+    border-radius:6px 6px 0 0;
+    position:relative;
+    top:1px;
   }
-  .search-wrap button:hover{ background:var(--gold-soft); }
+  nav.tabs button.active{
+    background:var(--paper-raised);
+    font-weight:700;
+    border-bottom:1px solid var(--paper-raised);
+  }
+  nav.tabs button:not(.active):hover{ background:rgba(38,34,26,0.05); }
 
-  .suggest-dropdown{
-    position:fixed;
-    background:#FFFFFF;
-    border-radius:10px;
-    box-shadow:0 16px 40px rgba(14,33,29,0.35);
-    display:none;
-    overflow:hidden;
-    z-index:200;
-    opacity:0;
-    transform:translateY(-4px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
+  section.view{display:none;}
+  section.view.active{display:block;}
+
+  /* ---------- shared controls ---------- */
+  .field{ margin-bottom:14px; }
+  .field label{
+    display:block; font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:12.5px; color:var(--ink-soft); margin-bottom:5px;
   }
-  .suggest-dropdown.open{ display:block; opacity:1; transform:translateY(0); }
-  .suggest-list{ max-height:320px; overflow-y:auto; }
-  .suggest-item{
-    display:block;
+  .field input[type=text], .field input[type=search], .field textarea, .field select{
     width:100%;
-    padding:11px 16px;
-    border:none;
-    background:#FFFFFF;
-    border-bottom:1px solid #EAEAEA;
-    cursor:pointer;
-    text-align:left;
-  }
-  .suggest-item:last-child{ border-bottom:none; }
-  .suggest-item:hover, .suggest-item.active{ background:#F2F2F2; }
-  .suggest-item .sw{ font-size:15px; font-weight:700; color:#1A1A1A; font-family:Georgia,"Noto Serif Sinhala",serif; }
-  .suggest-item .sc{ font-size:11px; color:#8A8A8A; margin-left:8px; }
-  .suggest-empty{ padding:16px; font-size:13px; color:#8A8A8A; text-align:center; background:#FFFFFF; }
-  .suggest-footer{
-    display:block;
-    width:100%;
-    padding:10px 16px;
-    border:none;
-    background:#F5F5F5;
-    color:#4A4A4A;
-    font-size:12.5px;
-    font-weight:600;
-    cursor:pointer;
-    text-align:center;
-  }
-  .suggest-footer:hover{ background:#E9E9E9; }
-
-  .stats-line{
-    margin-top:22px;
-    font-size:13px;
-    color:#B8B19B;
-    display:flex;
-    gap:18px;
-    flex-wrap:wrap;
-    opacity:0;
-    animation: rise 0.7s ease 0.3s forwards;
-  }
-  .stats-line b{ color:var(--gold-soft); font-weight:700; }
-
-  /* ---------------- MAIN ---------------- */
-  main{ max-width:1040px; margin:0 auto; padding:36px 24px 90px; }
-
-  .controls-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
-  }
-  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
-  .chip{
-    font-size:13px;
-    padding:7px 16px;
-    border-radius:999px;
+    padding:9px 10px;
     border:1px solid var(--line);
-    background:var(--parchment-raised);
-    color:var(--text-soft);
+    background:#fff;
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    border-radius:4px;
+  }
+  .field textarea{ min-height:70px; resize:vertical; }
+  .field input:focus, .field textarea:focus, .field select:focus{
+    outline:2px solid var(--brass); outline-offset:0; border-color:var(--brass);
+  }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:640px){ .row2{grid-template-columns:1fr;} }
+
+  button.btn{
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:14px;
+    padding:9px 16px;
+    border-radius:5px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper-raised);
     cursor:pointer;
-    transition: all 0.15s ease;
   }
-  .chip:hover{ border-color:var(--gold); color:var(--text); }
-  .chip.active{ background:var(--ink); color:var(--parchment-raised); border-color:var(--ink); }
-
-  .random-btn{
-    font-size:13px;
-    padding:8px 16px;
-    border-radius:999px;
-    border:1px solid var(--clay);
-    background:transparent;
-    color:var(--clay);
-    cursor:pointer;
-    white-space:nowrap;
+  button.btn:hover{ background:#3a3527; }
+  button.btn.secondary{ background:transparent; color:var(--ink); }
+  button.btn.secondary:hover{ background:rgba(38,34,26,0.06); }
+  button.btn.danger{ background:var(--danger); border-color:var(--danger); color:#fff; }
+  button.btn.danger:hover{ background:#7d2a1c; }
+  button.btn:disabled{ opacity:0.5; cursor:default; }
+  button.link{
+    background:none;border:none;padding:2px 6px;cursor:pointer;
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:13px; color:var(--maroon); text-decoration:underline;
   }
-  .random-btn:hover{ background:var(--clay); color:#fff; }
 
-  .result-count{ font-size:13px; color:var(--text-soft); margin: 0 0 16px; }
-
-  .card-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));
-    gap:16px;
+  .badge{
+    display:inline-block; font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:11.5px; padding:2px 9px; border-radius:20px; border:1px solid currentColor;
   }
+  .badge.published{ color:var(--sage); }
+  .badge.draft{ color:var(--draft); }
+
+  .banner{
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:13px; padding:10px 14px; border-radius:5px; margin-bottom:16px;
+  }
+  .banner.warn{ background:#F3E6D0; border:1px solid var(--brass); color:#5c4413; }
+  .banner.error{ background:#F6E1DB; border:1px solid var(--danger); color:var(--maroon-dark); }
+  .banner.ok{ background:#E8EDE4; border:1px solid var(--sage); color:#37452f; }
+
+  /* ---------- Admin ---------- */
+  .admin-toolbar{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:18px; }
+  .admin-toolbar input[type=search]{ flex:1; min-width:180px; }
+  .admin-toolbar select{ width:auto; }
+
+  form#entryForm{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-left:4px solid var(--maroon);
+    border-radius:6px;
+    padding:18px 20px;
+    margin-bottom:26px;
+  }
+  form#entryForm h2{ font-size:16px; margin:0 0 14px; }
+  .form-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:6px; }
+
+  table.entries{
+    width:100%; border-collapse:collapse;
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:14px;
+  }
+  table.entries th{
+    text-align:left; font-weight:600; font-size:12px; color:var(--ink-soft);
+    border-bottom:1px solid var(--ink); padding:8px 8px;
+  }
+  table.entries td{ border-bottom:1px solid var(--line); padding:10px 8px; vertical-align:top; }
+  table.entries tr:hover td{ background:rgba(169,130,44,0.06); }
+  .word-cell{ font-family:Georgia,"Noto Serif Sinhala",serif; font-weight:700; }
+  .meaning-cell{ color:var(--ink-soft); max-width:260px; }
+  .actions-cell{ white-space:nowrap; }
+
+  details.settings{
+    margin:0 0 20px; font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif; font-size:13px;
+  }
+  details.settings summary{ cursor:pointer; color:var(--ink-soft); }
+  details.settings .box{
+    margin-top:10px; padding:12px 14px; background:var(--paper-raised);
+    border:1px solid var(--line); border-radius:6px;
+  }
+  details.settings code{
+    display:block; background:#fff; border:1px solid var(--line); padding:8px;
+    border-radius:4px; font-size:12px; white-space:pre-wrap; margin-top:6px;
+  }
+
+  .empty{
+    text-align:center; padding:40px 10px; color:var(--ink-soft);
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif; font-size:14px;
+  }
+
+  /* ---------- Public ---------- */
+  .public-controls{ margin-bottom:20px; }
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .chip{
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:12.5px; padding:5px 13px; border-radius:20px; border:1px solid var(--line);
+    background:#fff; cursor:pointer; color:var(--ink-soft);
+  }
+  .chip.active{ background:var(--ink); color:var(--paper-raised); border-color:var(--ink); }
+
+  .card-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:640px){ .card-grid{grid-template-columns:1fr;} }
 
   .word-card{
-    background:var(--parchment-raised);
+    background:var(--paper-raised);
     border:1px solid var(--line);
-    border-radius:10px;
-    padding:20px 22px;
-    position:relative;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    border-left:4px solid var(--brass);
+    border-radius:6px;
+    padding:16px 18px;
+    box-shadow:var(--card-shadow);
   }
-  .word-card::before{
-    content:"";
-    position:absolute; left:0; top:14px; bottom:14px; width:3px;
-    background:var(--gold); border-radius:2px;
-  }
-  .word-card:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 24px rgba(22,48,43,0.10);
-    border-color:var(--gold-soft);
-  }
-  .word-card.highlight{
-    border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,155,60,0.25);
-  }
+  .word-card .w{ font-size:19px; font-weight:700; margin:0 0 4px; }
   .word-card .cat{
-    display:inline-block;
-    font-size:11px;
-    color:var(--clay);
-    background:rgba(140,74,50,0.08);
-    padding:2px 10px;
-    border-radius:999px;
-    margin-bottom:10px;
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:11.5px; color:var(--brass); margin-bottom:8px; display:block;
   }
-  .word-card .w{ font-size:21px; font-weight:700; margin:0 0 6px; color:var(--ink); }
-  .word-card .m{ font-size:14.5px; margin:0 0 8px; line-height:1.55; }
-  .word-card .s{ font-size:13px; color:var(--text-soft); margin:0 0 10px; line-height:1.5; }
+  .word-card .m{ font-size:14.5px; margin:0 0 6px; }
+  .word-card .s{
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:13px; color:var(--ink-soft); margin:0 0 8px;
+  }
   .word-card .alt{
-    font-size:12px; color:var(--text-soft); margin-bottom:8px;
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:12px; color:var(--ink-soft); margin-bottom:8px;
   }
-  .word-card .alt b{ color:var(--text); font-weight:600; }
   .word-card .src{
-    font-size:11.5px; color:var(--text-soft);
-    border-top:1px dashed var(--line);
-    padding-top:8px; margin-top:2px;
+    font-family:-apple-system,"Segoe UI","Noto Sans Sinhala",sans-serif;
+    font-size:11.5px; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:7px; margin-top:4px;
   }
 
-  .empty, .loading, .error-box{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--text-soft);
-    font-size:14.5px;
-  }
-  .error-box{ color:var(--clay); }
-
-  footer{
-    text-align:center;
-    padding:26px;
-    font-size:12px;
-    color:var(--text-soft);
-    border-top:1px solid var(--line);
-  }
-
-  /* ---------------- SEARCH OVERLAY ---------------- */
-  .overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(14,33,29,0.55);
-    backdrop-filter: blur(2px);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-    z-index:50;
-  }
-  .overlay.open{ display:flex; }
-  .overlay-panel{
-    background:var(--parchment-raised);
-    border-radius:14px;
-    width:100%;
-    max-width:680px;
-    max-height:78vh;
-    display:flex;
-    flex-direction:column;
-    box-shadow:0 24px 60px rgba(14,33,29,0.35);
-    opacity:0;
-    transform:translateY(8px) scale(0.98);
-    animation: panelIn 0.22s ease forwards;
-  }
-  @keyframes panelIn{
-    to{ opacity:1; transform:translateY(0) scale(1); }
-  }
-  .overlay-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:16px 22px;
-    border-bottom:1px solid var(--line);
-    flex-shrink:0;
-  }
-  .overlay-head .oh-title{ font-size:14px; color:var(--text-soft); }
-  .overlay-head .oh-close{
-    border:none; background:transparent; cursor:pointer;
-    font-size:20px; line-height:1; color:var(--text-soft); padding:4px 8px; border-radius:6px;
-  }
-  .overlay-head .oh-close:hover{ background:var(--parchment); color:var(--text); }
-  .overlay-body{
-    overflow-y:auto;
-    padding:18px 22px 22px;
-  }
-  .overlay .card-grid{ grid-template-columns:1fr; gap:12px; }
-  .overlay .word-card:hover{ transform:none; }
-
-  @media (max-width:520px){
-    .hero{ padding:48px 18px 44px; }
-    .hero h1{ font-size:32px; }
-    .search-wrap{ flex-direction:column; }
-    .search-wrap button{ padding:12px; }
-  }
+  .loading{ text-align:center; padding:30px; color:var(--ink-soft); font-family:-apple-system,sans-serif; }
 </style>
 </head>
 <body>
-
-  <div class="hero">
-    <div class="hero-inner">
-      <span class="hero-eyebrow ui">කලාපීය ගුරු එකමුතුව-කොළඹ</span>
-      <h1>විෂයානුබද්ධ වාග් මාලාව</h1>
-      <p class="lead ui">විෂයානුබද්ධ වචන, ඒවායේ අර්ථ සහ මූලාශ්‍ර එකම තැනකින් සොයාගන්න.</p>
-      <div class="search-wrap">
-        <input class="ui" type="search" id="searchInput" placeholder="වචනයක් හෝ අර්ථයක් ටයිප් කරන්න...">
-        <button class="ui" id="randomBtn" type="button">අහඹු වචනයක්</button>
-      </div>
-      <div class="suggest-dropdown ui" id="suggestDropdown">
-        <div class="suggest-list" id="suggestList"></div>
-      </div>
-      <div class="stats-line ui" id="statsLine"></div>
+<div id="app">
+  <header class="top">
+    <div>
+      <h1>වචන කෝෂය</h1>
+      <div class="sub">Supabase මත පදනම් වූ වචන දත්ත සමුදාය</div>
     </div>
-  </div>
+    <nav class="tabs">
+      <button class="ui" data-view="public" id="tabPublic">වචන කෝෂය</button>
+      <button class="ui" data-view="admin" id="tabAdmin">පරිපාලනය</button>
+    </nav>
+  </header>
 
-  <div class="overlay" id="searchOverlay">
-    <div class="overlay-panel">
-      <div class="overlay-head">
-        <span class="oh-title ui" id="overlayCount"></span>
-        <button class="oh-close ui" id="overlayClose" type="button" aria-label="වසන්න">&times;</button>
+  <!-- ============ PUBLIC VIEW ============ -->
+  <section class="view active" id="viewPublic">
+    <div class="public-controls">
+      <div class="field">
+        <label class="ui" for="publicSearch">වචනයක් හෝ අර්ථයක් සොයන්න</label>
+        <input class="ui" type="search" id="publicSearch" placeholder="උදා: ප්‍රඥාව">
       </div>
-      <div class="overlay-body" id="overlayBody"></div>
+      <div class="chip-row" id="publicCategoryChips"></div>
     </div>
-  </div>
+    <div id="publicList"><div class="loading ui">පූරණය වෙමින්...</div></div>
+  </section>
 
-  <main>
-    <div class="controls-row">
-      <div class="chip-row ui" id="categoryChips"></div>
+  <!-- ============ ADMIN VIEW ============ -->
+  <section class="view" id="viewAdmin">
+    <details class="settings">
+      <summary>සැකසුම් (වගු නාමය, ආදිය)</summary>
+      <div class="box">
+        <div class="field" style="margin-bottom:10px;">
+          <label for="tableNameInput">Supabase වගු නාමය (table name)</label>
+          <input type="text" id="tableNameInput" value="word_aliases">
+        </div>
+        <button class="btn secondary ui" id="saveTableName" type="button">යාවත්කාලීන කර නැවත පූරණය කරන්න</button>
+        <div id="altColNotice"></div>
+      </div>
+    </details>
+
+    <div id="adminBanner"></div>
+
+    <form id="entryForm">
+      <h2 class="ui" id="formTitle">නව වචනයක් එකතු කරන්න</h2>
+      <input type="hidden" id="editId">
+      <div class="row2">
+        <div class="field">
+          <label class="ui" for="fWord">වචනය *</label>
+          <input class="ui" type="text" id="fWord" required>
+        </div>
+        <div class="field">
+          <label class="ui" for="fCategory">Category</label>
+          <input class="ui" type="text" id="fCategory" list="categoryOptions" placeholder="උදා: සාමාන්‍ය">
+          <datalist id="categoryOptions"></datalist>
+        </div>
+      </div>
+      <div class="field">
+        <label class="ui" for="fMeaning">අර්ථය *</label>
+        <textarea class="ui" id="fMeaning" required></textarea>
+      </div>
+      <div class="field">
+        <label class="ui" for="fSummary">විස්තරය / සාරාංශය</label>
+        <textarea class="ui" id="fSummary"></textarea>
+      </div>
+      <div class="row2">
+        <div class="field" id="altField">
+          <label class="ui" for="fAlt">විකල්ප වචන (කොමා වලින් වෙන් කරන්න)</label>
+          <input class="ui" type="text" id="fAlt" placeholder="උදා: වචන1, වචන2">
+        </div>
+        <div class="field">
+          <label class="ui" for="fSource">Source</label>
+          <input class="ui" type="text" id="fSource" placeholder="මූලාශ්‍රය">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label class="ui" for="fStatus">තත්ත්වය</label>
+          <select class="ui" id="fStatus">
+            <option value="draft">කෙටුම්පත (Draft)</option>
+            <option value="published">ප්‍රකාශිත (Published)</option>
+          </select>
+        </div>
+        <div></div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn secondary ui" id="cancelEdit" style="display:none;">අවලංගු කරන්න</button>
+        <button type="submit" class="btn ui" id="submitBtn">එකතු කරන්න</button>
+      </div>
+    </form>
+
+    <div class="admin-toolbar">
+      <input class="ui" type="search" id="adminSearch" placeholder="සොයන්න: වචනය හෝ අර්ථය...">
+      <select class="ui" id="adminCategoryFilter"><option value="">සියලුම categories</option></select>
+      <select class="ui" id="adminStatusFilter">
+        <option value="">සියලුම තත්ත්ව</option>
+        <option value="draft">කෙටුම්පත</option>
+        <option value="published">ප්‍රකාශිත</option>
+      </select>
+      <button class="btn secondary ui" id="refreshBtn" type="button">නැවත පූරණය</button>
     </div>
-    <p class="result-count ui" id="resultCount"></p>
-    <div id="listArea"><div class="loading ui">පූරණය වෙමින්...</div></div>
-  </main>
 
-  <footer class="ui">වචන කෝෂය</footer>
+    <div id="adminList"><div class="loading ui">පූරණය වෙමින්...</div></div>
+  </section>
+</div>
 
 <script>
 (function(){
-  const SUPABASE_URL = "https://uqgzlaxsnknheoerbfus.supabase.co/rest/v1/";
+  const SUPABASE_URL = "https://uqgzlaxsnknheoerbfus.supabase.co";
   const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxZ3psYXhzbmtuaGVvZXJiZnVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM2MTUsImV4cCI6MjA3OTI4MzYxNX0.IYWZ7ukx8J-GJMWy7cMk2BWnmzJmJjjE93yEmJie7nQ";
-  const TABLE = "word_aliases";
+  const REST_BASE = SUPABASE_URL + "/rest/v1/";
 
+  let TABLE = "word_aliases";
   let entries = [];
-  let activeCategory = "";
+  let hasAltColumn = true;
+  let editingId = null;
 
   const $ = (id) => document.getElementById(id);
+
+  function headers(extra){
+    return Object.assign({
+      "apikey": ANON_KEY,
+      "Authorization": "Bearer " + ANON_KEY,
+      "Content-Type": "application/json"
+    }, extra || {});
+  }
+
+  async function sbGet(query){
+    const res = await fetch(REST_BASE + TABLE + query, { headers: headers() });
+    if(!res.ok){
+      const body = await res.text();
+      throw new Error(body || res.statusText);
+    }
+    return res.json();
+  }
+
+  async function sbWrite(method, body, filter){
+    const res = await fetch(REST_BASE + TABLE + (filter || ""), {
+      method,
+      headers: headers({ "Prefer": "return=representation" }),
+      body: body ? JSON.stringify(body) : undefined
+    });
+    const text = await res.text();
+    let json = null;
+    try { json = text ? JSON.parse(text) : null; } catch(e){ /* not json */ }
+    if(!res.ok){
+      const msg = (json && (json.message || json.hint)) || text || res.statusText;
+      const err = new Error(msg);
+      err.raw = json;
+      throw err;
+    }
+    return json;
+  }
+
+  // ---------- table / column config ----------
+  async function loadConfig(){
+    try{
+      const stored = await window.storage.get("config:table_name");
+      if(stored && stored.value) TABLE = stored.value;
+    }catch(e){ /* no stored value yet, keep default */ }
+    $("tableNameInput").value = TABLE;
+  }
+
+  async function checkAltColumn(){
+    try{
+      await sbGet("?select=alternatives&limit=1");
+      hasAltColumn = true;
+      $("altColNotice").innerHTML = "";
+    }catch(e){
+      hasAltColumn = false;
+      $("altColNotice").innerHTML =
+        '<div class="banner warn" style="margin-top:10px;">' +
+        '"alternatives" තීරුව මෙම වගුවේ නොමැත — විකල්ප වචන field එක අක්‍රිය කර ඇත. ' +
+        'එය සක්‍රීය කිරීමට පහත SQL එක Supabase SQL Editor එකේ run කරන්න:' +
+        '<code>ALTER TABLE ' + escapeHtml(TABLE) + ' ADD COLUMN alternatives text;</code></div>';
+    }
+    $("altField").style.display = hasAltColumn ? "" : "none";
+  }
+
+  // ---------- data loading ----------
+  async function loadEntries(){
+    $("adminList").innerHTML = '<div class="loading ui">පූරණය වෙමින්...</div>';
+    $("publicList").innerHTML = '<div class="loading ui">පූරණය වෙමින්...</div>';
+    try{
+      entries = await sbGet("?select=*&order=created_at.desc&limit=2000");
+      renderCategoryOptions();
+      renderAdminList();
+      renderPublicList();
+      showBanner("adminBanner", "", null);
+    }catch(e){
+      const msg = 'දත්ත ලබාගැනීමට නොහැකි විය: ' + escapeHtml(e.message) +
+        '. වගු නාමය "' + escapeHtml(TABLE) + '" නිවැරදිදැයි "සැකසුම්" හරහා පරීක්ෂා කරන්න.';
+      $("adminList").innerHTML = '<div class="empty ui">' + msg + '</div>';
+      $("publicList").innerHTML = '<div class="empty ui">' + msg + '</div>';
+    }
+  }
+
+  function showBanner(elId, message, type){
+    const el = $(elId);
+    if(!message){ el.innerHTML = ""; return; }
+    el.innerHTML = '<div class="banner ' + (type||"ok") + ' ui">' + escapeHtml(message) + '</div>';
+    if(type !== "error"){
+      setTimeout(()=>{ if(el.firstChild) el.innerHTML=""; }, 4000);
+    }
+  }
 
   function escapeHtml(s){
     return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({
@@ -378,231 +444,278 @@
     }[c]));
   }
 
-  async function loadEntries(){
+  function fmtDate(d){
+    if(!d) return "";
     try{
-      const res = await fetch(
-        SUPABASE_URL + TABLE + "?select=*&status=eq.published&order=created_at.desc&limit=2000",
-        { headers: { "apikey": ANON_KEY, "Authorization": "Bearer " + ANON_KEY } }
-      );
-      if(!res.ok) throw new Error(await res.text());
-      entries = await res.json();
-      renderStats();
-      renderCategoryChips();
-      renderList();
-    }catch(e){
-      $("listArea").innerHTML = '<div class="error-box ui">වචන ලබාගැනීමට නොහැකි විය: ' + escapeHtml(e.message) + '</div>';
-    }
+      const dt = new Date(d);
+      const pad = n => String(n).padStart(2,"0");
+      return dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate());
+    }catch(e){ return d; }
   }
 
-  function distinctCategories(){
+  // ---------- category helpers ----------
+  function distinctCategories(list){
     const set = new Set();
-    entries.forEach(e => { if(e.category) set.add(e.category); });
+    list.forEach(e => { if(e.category) set.add(e.category); });
     return Array.from(set).sort();
   }
 
-  function renderStats(){
-    const cats = distinctCategories().length;
-    $("statsLine").innerHTML =
-      '<span><b>' + entries.length + '</b> වචන</span>' +
-      '<span><b>' + cats + '</b> categories</span>';
+  function renderCategoryOptions(){
+    const cats = distinctCategories(entries);
+    $("categoryOptions").innerHTML = cats.map(c => '<option value="'+escapeHtml(c)+'">').join("");
+
+    const filterSel = $("adminCategoryFilter");
+    const currentVal = filterSel.value;
+    filterSel.innerHTML = '<option value="">සියලුම categories</option>' +
+      cats.map(c => '<option value="'+escapeHtml(c)+'">'+escapeHtml(c)+'</option>').join("");
+    filterSel.value = currentVal;
   }
 
-  function renderCategoryChips(){
-    const cats = distinctCategories();
-    let html = '<button class="chip'+(activeCategory===""?" active":"")+'" data-cat="">සියල්ල</button>';
-    cats.forEach(c => {
-      html += '<button class="chip'+(activeCategory===c?" active":"")+'" data-cat="'+escapeHtml(c)+'">'+escapeHtml(c)+'</button>';
-    });
-    $("categoryChips").innerHTML = html;
-  }
-
-  $("categoryChips").addEventListener("click", (ev) => {
-    const btn = ev.target.closest("button[data-cat]");
-    if(!btn) return;
-    activeCategory = btn.getAttribute("data-cat");
-    renderCategoryChips();
-    renderList();
-  });
-
-  $("searchInput").addEventListener("input", () => {
-    renderSuggestions();
-  });
-
-  $("searchInput").addEventListener("keydown", (ev) => {
-    if(ev.key === "Enter"){
-      ev.preventDefault();
-      closeSuggestions();
-      renderOverlay();
-    }
-    if(ev.key === "Escape"){
-      $("searchInput").value = "";
-      closeSuggestions();
-      closeOverlay();
-    }
-  });
-
-  document.addEventListener("click", (ev) => {
-    if(!ev.target.closest(".search-wrap") && !ev.target.closest(".suggest-dropdown")){
-      closeSuggestions();
-    }
-  });
-
-  function positionSuggestDropdown(){
-    const rect = $("searchInput").closest(".search-wrap").getBoundingClientRect();
-    const dd = $("suggestDropdown");
-    dd.style.top = (rect.bottom + 8) + "px";
-    dd.style.left = rect.left + "px";
-    dd.style.width = rect.width + "px";
-  }
-  window.addEventListener("resize", () => {
-    if($("suggestDropdown").classList.contains("open")) positionSuggestDropdown();
-  });
-  window.addEventListener("scroll", () => {
-    if($("suggestDropdown").classList.contains("open")) positionSuggestDropdown();
-  }, { passive:true });
-
-  function openSuggestions(){
-    positionSuggestDropdown();
-    $("suggestDropdown").classList.add("open");
-  }
-  function closeSuggestions(){ $("suggestDropdown").classList.remove("open"); }
-
-  function renderSuggestions(){
-    const q = $("searchInput").value.trim();
-    if(!q){ closeSuggestions(); return; }
-    const list = filtered();
-    const top = list.slice(0, 7);
-    let html = "";
-    if(top.length === 0){
-      html = '<div class="suggest-empty">"' + escapeHtml(q) + '" සඳහා ගැලපෙන වචන හමු නොවීය.</div>';
-    } else {
-      html = top.map(e =>
-        '<button type="button" class="suggest-item" data-id="' + e.id + '">' +
-          '<span class="sw">' + escapeHtml(e.word) + '</span>' +
-          (e.category ? '<span class="sc">' + escapeHtml(e.category) + '</span>' : '') +
-        '</button>'
-      ).join("");
-      if(list.length > top.length){
-        html += '<button type="button" class="suggest-footer" id="suggestSeeAll">සියලුම ප්‍රතිඵල බලන්න (' + list.length + ')</button>';
-      }
-    }
-    $("suggestList").innerHTML = html;
-    openSuggestions();
-
-    $("suggestList").querySelectorAll(".suggest-item").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.getAttribute("data-id");
-        const entry = entries.find(e => String(e.id) === String(id));
-        closeSuggestions();
-        if(entry) openSingle(entry);
-      });
-    });
-    const seeAll = $("suggestSeeAll");
-    if(seeAll){
-      seeAll.addEventListener("click", () => {
-        closeSuggestions();
-        renderOverlay();
-      });
-    }
-  }
-
-  function truncateText(s, n){
-    s = s || "";
-    return s.length > n ? s.slice(0, n) + "…" : s;
-  }
-
-  function openOverlay(){ $("searchOverlay").classList.add("open"); }
-  function closeOverlay(){ $("searchOverlay").classList.remove("open"); }
-
-  function openSingle(entry){
-    $("overlayCount").textContent = "";
-    $("overlayBody").innerHTML = '<div class="card-grid">' + cardHtml(entry) + '</div>';
-    openOverlay();
-  }
-
-  function renderOverlay(){
-    const q = $("searchInput").value.trim();
-    if(!q){ closeOverlay(); return; }
-    const list = filtered();
-    $("overlayCount").textContent = list.length ? (list.length + " ප්‍රතිඵල") : "ප්‍රතිඵල නැත";
-    $("overlayBody").innerHTML = list.length
-      ? '<div class="card-grid">' + list.map(cardHtml).join("") + '</div>'
-      : '<div class="empty ui">"' + escapeHtml(q) + '" සඳහා ගැලපෙන වචන හමු නොවීය.</div>';
-    openOverlay();
-  }
-
-  $("overlayClose").addEventListener("click", () => {
-    $("searchInput").value = "";
-    closeOverlay();
-    closeSuggestions();
-  });
-  $("searchOverlay").addEventListener("click", (ev) => {
-    if(ev.target.id === "searchOverlay"){
-      $("searchInput").value = "";
-      closeOverlay();
-      closeSuggestions();
-    }
-  });
-  document.addEventListener("keydown", (ev) => {
-    if(ev.key === "Escape" && $("searchOverlay").classList.contains("open")){
-      $("searchInput").value = "";
-      closeOverlay();
-    }
-  });
-
-  function filtered(){
-    const q = $("searchInput").value.trim().toLowerCase();
+  // ---------- ADMIN rendering ----------
+  function filteredAdminEntries(){
+    const q = $("adminSearch").value.trim().toLowerCase();
+    const cat = $("adminCategoryFilter").value;
+    const status = $("adminStatusFilter").value;
     return entries.filter(e => {
-      if(activeCategory && e.category !== activeCategory) return false;
+      if(cat && e.category !== cat) return false;
+      if(status && e.status !== status) return false;
       if(q){
-        const hay = ((e.word||"") + " " + (e.meaning||"") + " " + (e.summary||"") + " " + (e.alternatives||"")).toLowerCase();
+        const hay = ((e.word||"") + " " + (e.meaning||"") + " " + (e.summary||"")).toLowerCase();
         if(!hay.includes(q)) return false;
       }
       return true;
     });
   }
 
-  function cardHtml(e){
-    let html = '<div class="word-card" id="card-' + e.id + '">';
-    if(e.category) html += '<span class="cat ui">' + escapeHtml(e.category) + '</span>';
-    html += '<p class="w">' + escapeHtml(e.word) + '</p>';
-    html += '<p class="m">' + escapeHtml(e.meaning) + '</p>';
-    if(e.summary) html += '<p class="s ui">' + escapeHtml(e.summary) + '</p>';
-    if(e.alternatives) html += '<p class="alt ui"><b>විකල්ප:</b> ' + escapeHtml(e.alternatives) + '</p>';
-    if(e.source) html += '<p class="src ui">මූලාශ්‍රය: ' + escapeHtml(e.source) + '</p>';
-    html += '</div>';
-    return html;
-  }
-
-  function renderList(){
-    const list = filtered();
-    $("resultCount").textContent = list.length ? (list.length + " ප්‍රතිඵල") : "";
+  function renderAdminList(){
+    const list = filteredAdminEntries();
     if(list.length === 0){
-      $("listArea").innerHTML = '<div class="empty ui">ගැලපෙන වචන හමු නොවීය. වෙනත් වචනයක් උත්සාහ කරන්න.</div>';
+      $("adminList").innerHTML = '<div class="empty ui">ගැලපෙන ප්‍රවේශයන් නොමැත. නව වචනයක් එකතු කරන්න.</div>';
       return;
     }
-    $("listArea").innerHTML = '<div class="card-grid">' + list.map(cardHtml).join("") + '</div>';
+    let html = '<table class="entries"><thead><tr>' +
+      '<th>වචනය</th><th>අර්ථය</th><th>Category</th><th>තත්ත්වය</th><th>යාවත්කාලීන</th><th></th>' +
+      '</tr></thead><tbody>';
+    list.forEach(e => {
+      html += '<tr>' +
+        '<td class="word-cell">' + escapeHtml(e.word) + '</td>' +
+        '<td class="meaning-cell">' + escapeHtml(truncate(e.meaning, 60)) + '</td>' +
+        '<td class="ui">' + escapeHtml(e.category || "—") + '</td>' +
+        '<td><span class="badge ' + (e.status==="published"?"published":"draft") + ' ui">' +
+            (e.status==="published" ? "ප්‍රකාශිත" : "කෙටුම්පත") + '</span></td>' +
+        '<td class="ui">' + fmtDate(e.updated_at || e.created_at) + '</td>' +
+        '<td class="actions-cell ui">' +
+          '<button class="link" data-action="edit" data-id="'+e.id+'">සංස්කරණය</button>' +
+          '<button class="link" data-action="toggle" data-id="'+e.id+'">' +
+             (e.status==="published" ? "Draft කරන්න" : "Publish කරන්න") + '</button>' +
+          '<button class="link" data-action="delete" data-id="'+e.id+'" style="color:var(--danger);">මකන්න</button>' +
+        '</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table>';
+    $("adminList").innerHTML = html;
   }
 
-  $("randomBtn").addEventListener("click", () => {
-    $("searchInput").value = "";
-    closeOverlay();
-    closeSuggestions();
-    const list = filtered();
-    if(list.length === 0) return;
-    const pick = list[Math.floor(Math.random() * list.length)];
-    renderList();
-    requestAnimationFrame(() => {
-      const el = $("card-" + pick.id);
-      if(el){
-        el.scrollIntoView({ behavior:"smooth", block:"center" });
-        el.classList.add("highlight");
-        setTimeout(() => el.classList.remove("highlight"), 1600);
-      }
-    });
+  function truncate(s, n){
+    s = s || "";
+    return s.length > n ? s.slice(0,n) + "…" : s;
+  }
+
+  $("adminList").addEventListener("click", (ev) => {
+    const btn = ev.target.closest("button[data-action]");
+    if(!btn) return;
+    const id = btn.getAttribute("data-id");
+    const action = btn.getAttribute("data-action");
+    const entry = entries.find(e => String(e.id) === String(id));
+    if(!entry) return;
+    if(action === "edit") startEdit(entry);
+    if(action === "delete") doDelete(entry);
+    if(action === "toggle") doToggleStatus(entry);
   });
 
-  loadEntries();
+  ["adminSearch","adminCategoryFilter","adminStatusFilter"].forEach(id => {
+    $(id).addEventListener("input", renderAdminList);
+    $(id).addEventListener("change", renderAdminList);
+  });
+
+  $("refreshBtn").addEventListener("click", loadEntries);
+
+  // ---------- form (create / edit) ----------
+  function resetForm(){
+    editingId = null;
+    $("formTitle").textContent = "නව වචනයක් එකතු කරන්න";
+    $("submitBtn").textContent = "එකතු කරන්න";
+    $("cancelEdit").style.display = "none";
+    $("editId").value = "";
+    $("fWord").value = "";
+    $("fCategory").value = "";
+    $("fMeaning").value = "";
+    $("fSummary").value = "";
+    $("fAlt").value = "";
+    $("fSource").value = "";
+    $("fStatus").value = "draft";
+  }
+
+  function startEdit(entry){
+    editingId = entry.id;
+    $("formTitle").textContent = '"' + entry.word + '" සංස්කරණය කරන්න';
+    $("submitBtn").textContent = "යාවත්කාලීන කරන්න";
+    $("cancelEdit").style.display = "";
+    $("editId").value = entry.id;
+    $("fWord").value = entry.word || "";
+    $("fCategory").value = entry.category || "";
+    $("fMeaning").value = entry.meaning || "";
+    $("fSummary").value = entry.summary || "";
+    $("fAlt").value = entry.alternatives || "";
+    $("fSource").value = entry.source || "";
+    $("fStatus").value = entry.status === "published" ? "published" : "draft";
+    $("entryForm").scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+
+  $("cancelEdit").addEventListener("click", resetForm);
+
+  $("entryForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const word = $("fWord").value.trim();
+    const meaning = $("fMeaning").value.trim();
+    if(!word || !meaning){ return; }
+
+    const payload = {
+      word,
+      meaning,
+      summary: $("fSummary").value.trim() || null,
+      category: $("fCategory").value.trim() || null,
+      source: $("fSource").value.trim() || null,
+      status: $("fStatus").value,
+      updated_at: new Date().toISOString()
+    };
+    if(hasAltColumn){
+      payload.alternatives = $("fAlt").value.trim() || null;
+    }
+
+    const submitBtn = $("submitBtn");
+    submitBtn.disabled = true;
+    try{
+      if(editingId){
+        await sbWrite("PATCH", payload, "?id=eq." + encodeURIComponent(editingId));
+        showBanner("adminBanner", "යාවත්කාලීන කරන ලදී.", "ok");
+      } else {
+        payload.created_at = new Date().toISOString();
+        await sbWrite("POST", payload, "");
+        showBanner("adminBanner", "නව වචනය එකතු කරන ලදී.", "ok");
+      }
+      resetForm();
+      await loadEntries();
+    }catch(e){
+      showBanner("adminBanner", "සුරැකීමට නොහැකි විය: " + e.message, "error");
+    }finally{
+      submitBtn.disabled = false;
+    }
+  });
+
+  async function doDelete(entry){
+    if(!confirm('"' + entry.word + '" මකා දැමීමට විශ්වාසද?')) return;
+    try{
+      await sbWrite("DELETE", null, "?id=eq." + encodeURIComponent(entry.id));
+      showBanner("adminBanner", "ප්‍රවේශය මකා දමන ලදී.", "ok");
+      if(editingId === entry.id) resetForm();
+      await loadEntries();
+    }catch(e){
+      showBanner("adminBanner", "මකා දැමීමට නොහැකි විය: " + e.message, "error");
+    }
+  }
+
+  async function doToggleStatus(entry){
+    const newStatus = entry.status === "published" ? "draft" : "published";
+    try{
+      await sbWrite("PATCH", { status:newStatus, updated_at:new Date().toISOString() },
+        "?id=eq." + encodeURIComponent(entry.id));
+      await loadEntries();
+    }catch(e){
+      showBanner("adminBanner", "තත්ත්වය වෙනස් කිරීමට නොහැකි විය: " + e.message, "error");
+    }
+  }
+
+  // ---------- PUBLIC rendering ----------
+  let activeCategory = "";
+
+  function renderPublicCategoryChips(){
+    const cats = distinctCategories(entries.filter(e => e.status === "published"));
+    let html = '<button class="chip ui'+(activeCategory===""?" active":"")+'" data-cat="">සියල්ල</button>';
+    cats.forEach(c => {
+      html += '<button class="chip ui'+(activeCategory===c?" active":"")+'" data-cat="'+escapeHtml(c)+'">'+escapeHtml(c)+'</button>';
+    });
+    $("publicCategoryChips").innerHTML = html;
+  }
+
+  $("publicCategoryChips").addEventListener("click", (ev) => {
+    const btn = ev.target.closest("button[data-cat]");
+    if(!btn) return;
+    activeCategory = btn.getAttribute("data-cat");
+    renderPublicCategoryChips();
+    renderPublicList();
+  });
+
+  $("publicSearch").addEventListener("input", renderPublicList);
+
+  function renderPublicList(){
+    renderPublicCategoryChips();
+    const q = $("publicSearch").value.trim().toLowerCase();
+    const list = entries.filter(e => {
+      if(e.status !== "published") return false;
+      if(activeCategory && e.category !== activeCategory) return false;
+      if(q){
+        const hay = ((e.word||"") + " " + (e.meaning||"") + " " + (e.summary||"")).toLowerCase();
+        if(!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    if(list.length === 0){
+      $("publicList").innerHTML = '<div class="empty ui">ගැලපෙන වචන හමු නොවීය.</div>';
+      return;
+    }
+    let html = '<div class="card-grid">';
+    list.forEach(e => {
+      html += '<div class="word-card">';
+      if(e.category) html += '<span class="cat">' + escapeHtml(e.category) + '</span>';
+      html += '<p class="w">' + escapeHtml(e.word) + '</p>';
+      html += '<p class="m">' + escapeHtml(e.meaning) + '</p>';
+      if(e.summary) html += '<p class="s">' + escapeHtml(e.summary) + '</p>';
+      if(e.alternatives) html += '<p class="alt">විකල්ප: ' + escapeHtml(e.alternatives) + '</p>';
+      if(e.source) html += '<p class="src">මූලාශ්‍රය: ' + escapeHtml(e.source) + '</p>';
+      html += '</div>';
+    });
+    html += '</div>';
+    $("publicList").innerHTML = html;
+  }
+
+  // ---------- tabs ----------
+  function switchView(view){
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.querySelectorAll("nav.tabs button").forEach(b => b.classList.remove("active"));
+    $("view" + (view === "admin" ? "Admin" : "Public")).classList.add("active");
+    $("tab" + (view === "admin" ? "Admin" : "Public")).classList.add("active");
+  }
+  $("tabPublic").addEventListener("click", () => switchView("public"));
+  $("tabAdmin").addEventListener("click", () => switchView("admin"));
+
+  // ---------- settings ----------
+  $("saveTableName").addEventListener("click", async () => {
+    const val = $("tableNameInput").value.trim();
+    if(!val) return;
+    TABLE = val;
+    try{ await window.storage.set("config:table_name", val); }catch(e){ /* ignore */ }
+    await checkAltColumn();
+    await loadEntries();
+  });
+
+  // ---------- init ----------
+  (async function init(){
+    switchView("public");
+    await loadConfig();
+    await checkAltColumn();
+    await loadEntries();
+  })();
 })();
 </script>
 </body>
