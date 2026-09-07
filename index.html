@@ -315,10 +315,14 @@ async function login(){
     return;
   }
   try {
-    const res = await fetch(`${REST}/authors?username=eq.${encodeURIComponent(username)}&select=id,username,password`, { headers: HEADERS });
+    const res = await fetch(`${REST}/rpc/authenticate_author`, {
+      method: "POST",
+      headers: HEADERS,
+      body: JSON.stringify({ p_username: username, p_password: password })
+    });
     if (!res.ok) throw new Error("network");
     const rows = await res.json();
-    if (rows.length === 0 || rows[0].password !== password){
+    if (!rows || rows.length === 0){
       errEl.textContent = "වැරදි පරිශීලක නාමයක් හෝ මුරපදයක්.";
       return;
     }
