@@ -170,6 +170,72 @@
     text-align:center; padding:26px 20px; color:var(--forest-700); font-size:.85rem;
     background:var(--mint-100); border-top:1px solid var(--mint-200);
   }
+
+  /* ---------- TABS ---------- */
+  .tab-nav{
+    display:flex; gap:8px; max-width:980px; margin:22px auto 0; padding:0 20px;
+  }
+  .tab-btn{
+    background:var(--paper-2); border:1.5px solid var(--mint-200); color:var(--ink-soft);
+    padding:10px 22px; border-radius:999px 999px 0 0; font-family:inherit; font-size:.92rem;
+    font-weight:600; cursor:pointer; transition:.15s; border-bottom:none;
+    position:relative; top:1px;
+  }
+  .tab-btn.active{
+    background:var(--forest-700); color:#fff; border-color:var(--forest-700);
+  }
+  .tab-btn:not(.active):hover{background:var(--mint-100); color:var(--forest-800);}
+
+  /* ---------- ANALYTICS ---------- */
+  #analyticsView{display:none;}
+  .stat-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:8px;}
+  @media (max-width:640px){.stat-grid{grid-template-columns:1fr;}}
+  .stat-card{
+    background:var(--paper-2); border:1px solid var(--mint-200); border-radius:var(--radius);
+    padding:24px 26px; box-shadow:var(--shadow); text-align:center;
+  }
+  .stat-num{font-family:'Noto Serif Sinhala',serif; font-size:2.3rem; font-weight:700; color:var(--forest-700);}
+  .stat-label{font-size:.88rem; color:var(--ink-soft); margin-top:4px;}
+  .sub-heading{color:var(--forest-800); font-size:1.08rem; margin:30px 0 14px;}
+  .rank-list{
+    background:var(--paper-2); border:1px solid var(--mint-200); border-radius:var(--radius);
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .rank-row{
+    display:flex; align-items:center; gap:14px; padding:13px 20px;
+    border-bottom:1px solid var(--mint-100);
+  }
+  .rank-row:last-child{border-bottom:none;}
+  .rank-pos{
+    width:26px; height:26px; border-radius:50%; background:var(--mint-200); color:var(--forest-800);
+    font-size:.78rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .rank-name{flex:1; font-weight:600; color:var(--forest-800);}
+  .rank-count{
+    background:var(--forest-700); color:#fff; font-size:.78rem; font-weight:700;
+    padding:3px 12px; border-radius:999px;
+  }
+  .tag-cloud{display:flex; flex-wrap:wrap; gap:10px;}
+  .source-tag{
+    background:var(--paper-2); border:1px solid var(--mint-200); color:var(--forest-800);
+    padding:8px 16px; border-radius:999px; font-size:.86rem; box-shadow:var(--shadow);
+  }
+  .source-tag b{color:var(--forest-600); margin-left:6px;}
+
+  /* ---------- DUPLICATE WORD MODAL ---------- */
+  .dup-message{
+    background:var(--mint-100); border:1px solid var(--mint-200); border-radius:10px;
+    padding:14px 16px; font-size:.9rem; color:var(--forest-800); line-height:1.65; margin-bottom:18px;
+  }
+  .dup-existing{
+    background:var(--paper); border:1px solid var(--mint-200); border-left:4px solid #c99a2e;
+    border-radius:10px; padding:14px 16px; margin-bottom:22px;
+  }
+  .dup-existing .dup-word{
+    font-family:'Noto Serif Sinhala',serif; font-weight:700; font-size:1.08rem;
+    color:var(--forest-800); margin-bottom:6px;
+  }
+  .dup-existing .dup-meaning{font-size:.88rem; color:var(--ink-soft); line-height:1.65;}
 </style>
 </head>
 <body oncontextmenu="return false;">
@@ -178,6 +244,11 @@
   <div class="brand">විෂයානුබද්ධ වාග් මාලාව<small>පරිපාලක පුවරුව — ඇතුළත් කිරීම් කළමනාකරණය</small></div>
   <div class="topbar-right" id="topRightSlot"></div>
 </header>
+
+<div class="tab-nav">
+  <button class="tab-btn" id="tabAdminBtn">පරිපාලක පුවරුව</button>
+  <button class="tab-btn" id="tabAnalyticsBtn">විශ්ලේෂණ</button>
+</div>
 
 <main>
 
@@ -226,6 +297,14 @@
     <div id="entriesList"></div>
 
   </div>
+
+  <div id="analyticsView">
+    <div class="section-title" style="margin-top:0;">
+      <h2>විශ්ලේෂණ</h2>
+      <span>Password අවශ්‍ය නොවේ — විවෘතව බලාගත හැක</span>
+    </div>
+    <div id="analyticsContent"><div class="empty-state">පූරණය වෙමින්...</div></div>
+  </div>
 </main>
 
 <footer>කලාපීය ගුරු සහයෝගීතාව</footer>
@@ -252,6 +331,27 @@
   </div>
 </div>
 
+<!-- Duplicate Word Warning Modal -->
+<div class="overlay" id="duplicateOverlay">
+  <div class="modal">
+    <h3>වචනය දැනටමත් තිබේ</h3>
+    <div class="dup-message">
+      මේ වචනය දැනටමත් ඇතුළත් කර තිබේ. එය වැරදි නම් හෝ එහි අඩුවවක් ඇත්නම් පමණක් අලුතෙන් ඇතුළත් කරන්න. නමුත් පැරණි ඇතුළත් කිරීම මකා දැමීමට හෝ වෙනස් කළ හැක්කේ Authorට පමණි.
+    </div>
+    <div class="dup-existing">
+      <div class="dup-word" id="dupWord"></div>
+      <div class="dup-meaning" id="dupMeaning"></div>
+    </div>
+    <div class="modal-actions" id="dupActionsInfo" style="display:none;">
+      <button class="btn secondary" id="dupOkBtn" style="width:auto;">තේරුණා</button>
+    </div>
+    <div class="modal-actions" id="dupActionsConfirm" style="display:none;">
+      <button class="btn ghost" id="dupCancelBtn">අවලංගු කරන්න</button>
+      <button class="btn secondary" id="dupProceedBtn" style="width:auto;">එසේම එකතු කරන්න</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -259,6 +359,7 @@
 const SUPABASE_URL = "https://uqgzlaxsnknheoerbfus.supabase.co";
 const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxZ3psYXhzbmtuaGVvZXJiZnVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM2MTUsImV4cCI6MjA3OTI4MzYxNX0.IYWZ7ukx8J-GJMWy7cMk2BWnmzJmJjjE93yEmJie7nQ";
 const REST = `${SUPABASE_URL}/rest/v1`;
+const LEARNX_TABLE = "learnX pedia"; // table name has a literal space + mixed case, must be URL-encoded when used
 const HEADERS = {
   apikey: ANON_KEY,
   Authorization: `Bearer ${ANON_KEY}`,
@@ -381,6 +482,40 @@ function entryTemplate(r){
   </div>`;
 }
 
+let pendingEntryPayload = null;
+
+// looks up an existing entry (any author) with the same word, case-insensitive exact match
+async function checkDuplicateWord(word){
+  try {
+    const res = await fetch(`${REST}/word_aliases?word=ilike.${encodeURIComponent(word)}&select=word,meaning&limit=1`, { headers: HEADERS });
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return rows.length > 0 ? rows[0] : null;
+  } catch(e){
+    return null;
+  }
+}
+
+// mode: "info" shows a single acknowledgement button (used while still filling the form),
+// mode: "confirm" shows Cancel / Add-anyway (used right before actually inserting)
+function showDuplicateModal(match, mode){
+  document.getElementById("dupWord").textContent = match.word;
+  document.getElementById("dupMeaning").textContent = match.meaning || "-";
+  document.getElementById("dupActionsInfo").style.display = mode === "info" ? "flex" : "none";
+  document.getElementById("dupActionsConfirm").style.display = mode === "confirm" ? "flex" : "none";
+  document.getElementById("duplicateOverlay").classList.add("show");
+}
+
+// fires as soon as the user leaves the word field (moves to category, meaning, or anywhere else)
+document.getElementById("fWord").addEventListener("blur", async (e) => {
+  const word = e.target.value.trim();
+  if (!word) return;
+  // if they're moving straight to the "එකතු කරන්න" button, let the submit-time check below handle it instead of double-popping
+  if (e.relatedTarget && e.relatedTarget.id === "addBtn") return;
+  const match = await checkDuplicateWord(word);
+  if (match) showDuplicateModal(match, "info");
+});
+
 async function addEntry(){
   const word = document.getElementById("fWord").value.trim();
   const meaning = document.getElementById("fMeaning").value.trim();
@@ -393,16 +528,30 @@ async function addEntry(){
     showToast("වචනය සහ අර්ථ විස්තරය අවශ්‍යයි.");
     return;
   }
+
+  const payload = {
+    word, meaning, summary, category, source,
+    author: session.username,
+    author_id: session.id,
+    status: isDraft ? "draft" : "published"
+  };
+
+  const match = await checkDuplicateWord(word);
+  if (match){
+    pendingEntryPayload = payload;
+    showDuplicateModal(match, "confirm");
+    return;
+  }
+
+  await submitEntry(payload);
+}
+
+async function submitEntry(payload){
   try {
     const res = await fetch(`${REST}/word_aliases`, {
       method: "POST",
       headers: { ...HEADERS, Prefer: "return=representation" },
-      body: JSON.stringify({
-        word, meaning, summary, category, source,
-        author: session.username,
-        author_id: session.id,
-        status: isDraft ? "draft" : "published"
-      })
+      body: JSON.stringify(payload)
     });
     if (!res.ok) throw new Error("insert failed");
     ["fWord","fMeaning","fSummary","fCategory","fSource"].forEach(id => document.getElementById(id).value = "");
@@ -413,6 +562,7 @@ async function addEntry(){
     showToast("එකතු කිරීමේදී දෝෂයක් ඇති විය.");
   }
 }
+
 
 function openEdit(r){
   document.getElementById("editId").value = r.id;
@@ -485,14 +635,142 @@ document.getElementById("loginPass").addEventListener("keydown", e => { if (e.ke
 document.getElementById("addBtn").addEventListener("click", addEntry);
 document.getElementById("cancelEdit").addEventListener("click", () => document.getElementById("editOverlay").classList.remove("show"));
 document.getElementById("saveEdit").addEventListener("click", saveEdit);
+document.getElementById("dupOkBtn").addEventListener("click", () => {
+  document.getElementById("duplicateOverlay").classList.remove("show");
+});
+document.getElementById("dupCancelBtn").addEventListener("click", () => {
+  pendingEntryPayload = null;
+  document.getElementById("duplicateOverlay").classList.remove("show");
+});
+document.getElementById("dupProceedBtn").addEventListener("click", async () => {
+  document.getElementById("duplicateOverlay").classList.remove("show");
+  if (pendingEntryPayload){
+    await submitEntry(pendingEntryPayload);
+    pendingEntryPayload = null;
+  }
+});
+
+// ---------------- TABS ----------------
+function setActiveTabBtn(tab){
+  document.getElementById("tabAdminBtn").classList.toggle("active", tab === "admin");
+  document.getElementById("tabAnalyticsBtn").classList.toggle("active", tab === "analytics");
+}
+
+function showAdminTab(){
+  setActiveTabBtn("admin");
+  document.getElementById("analyticsView").style.display = "none";
+  if (session){
+    document.getElementById("loginWrap").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+  } else {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginWrap").style.display = "block";
+  }
+}
+
+function showAnalyticsTab(){
+  setActiveTabBtn("analytics");
+  document.getElementById("loginWrap").style.display = "none";
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("analyticsView").style.display = "block";
+  loadAnalytics();
+}
+
+document.getElementById("tabAdminBtn").addEventListener("click", showAdminTab);
+document.getElementById("tabAnalyticsBtn").addEventListener("click", showAnalyticsTab);
+
+// ---------------- ANALYTICS (no login required) ----------------
+async function loadAnalytics(){
+  const wrap = document.getElementById("analyticsContent");
+  wrap.innerHTML = `<div class="empty-state">පූරණය වෙමින්...</div>`;
+  try {
+    // word_aliases: has author + source, drives the author ranking & source list
+    const waRes = await fetch(`${REST}/word_aliases?select=author,source`, { headers: HEADERS });
+    if (!waRes.ok) throw new Error("fetch failed");
+    const waRows = await waRes.json();
+
+    // learnX pedia: separate dataset, no author/source columns — only contributes to the total word count
+    let learnxCount = 0;
+    let learnxError = false;
+    try {
+      const lxRes = await fetch(`${REST}/${encodeURIComponent(LEARNX_TABLE)}?select=id`, { headers: HEADERS });
+      if (!lxRes.ok) throw new Error("learnx fetch failed");
+      const lxRows = await lxRes.json();
+      learnxCount = lxRows.length;
+    } catch (e) {
+      learnxError = true;
+    }
+
+    const authorCounts = {};
+    const sourceCounts = {};
+    waRows.forEach(r => {
+      const a = (r.author && r.author.trim()) ? r.author.trim() : "නොදන්නා";
+      authorCounts[a] = (authorCounts[a] || 0) + 1;
+      const s = (r.source && r.source.trim()) ? r.source.trim() : null;
+      if (s) sourceCounts[s] = (sourceCounts[s] || 0) + 1;
+    });
+
+    const authorList = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]);
+    const sourceList = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]);
+    const totalAuthors = authorList.length;
+    const totalWords = waRows.length + learnxCount;
+
+    const datasetRows = [
+      ["විෂයානුබද්ධ වාග් මාලාව (word_aliases)", waRows.length],
+      ["learnX Pedia", learnxError ? "-" : learnxCount]
+    ];
+
+    wrap.innerHTML = `
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num">${totalWords}</div>
+          <div class="stat-label">දැනට ඇති සම්පූර්ණ වචන ගණන (සියලු මූලාශ්‍ර)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">${totalAuthors}</div>
+          <div class="stat-label">දැනට සිටින Author ගණන (word_aliases)</div>
+        </div>
+      </div>
+
+      <h3 class="sub-heading">දත්ත මූලාශ්‍ර අනුව වචන ගණන</h3>
+      <div class="rank-list">
+        ${datasetRows.map(([name, count]) => `
+          <div class="rank-row">
+            <span class="rank-name">${escapeHtml(name)}</span>
+            <span class="rank-count">${count}</span>
+          </div>`).join("")}
+      </div>
+      ${learnxError ? `<div class="empty-state" style="margin-top:10px;">learnX Pedia table එකට connect වෙන්න බැරි වුණා — table නම හෝ permissions නැවත පරීක්ෂා කරන්න.</div>` : ""}
+
+      <h3 class="sub-heading">Author අනුව වචන ගණන (word_aliases, අවරෝහණ පිළිවෙළ)</h3>
+      ${
+        authorList.length
+          ? `<div class="rank-list">${authorList.map(([name, count], i) => `
+              <div class="rank-row">
+                <span class="rank-pos">${i + 1}</span>
+                <span class="rank-name">${escapeHtml(name)}</span>
+                <span class="rank-count">${count}</span>
+              </div>`).join("")}</div>`
+          : `<div class="empty-state">දත්ත නොමැත.</div>`
+      }
+      <div class="empty-state" style="margin-top:10px; padding:14px; text-align:left;">learnX Pedia table එකේ author තොරතුරු නොමැති නිසා, එහි වචන මෙම ranking එකට ඇතුළත් නොවේ — ඒවා ඉහත මුළු ගණනට පමණක් එකතු වේ.</div>
+
+      <h3 class="sub-heading">භාවිත කර ඇති මූලාශ්‍ර (word_aliases)</h3>
+      ${
+        sourceList.length
+          ? `<div class="tag-cloud">${sourceList.map(([s, count]) => `
+              <span class="source-tag">${escapeHtml(s)}<b>${count}</b></span>`).join("")}</div>`
+          : `<div class="empty-state">මූලාශ්‍ර සටහන් වී නොමැත.</div>`
+      }
+    `;
+  } catch (e) {
+    wrap.innerHTML = `<div class="empty-state">දත්ත පූරණය කිරීමේදී දෝෂයක් ඇති විය.</div>`;
+  }
+}
 
 // init
 renderTopRight();
-if (session){
-  document.getElementById("loginWrap").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-  loadEntries();
-}
+showAdminTab();
 </script>
 </body>
 </html>
