@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>පරිපාලක පිටුව | විෂයානුබද්ධ වාග් මාලාව</title>
+<title>පරිපාලක පිටුව-Admin Page | විෂයානුබද්ධ වාග් මාලාව-Subject-related Vocabulary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700;800&family=Noto+Serif+Sinhala:wght@600;700&display=swap" rel="stylesheet">
@@ -241,57 +241,76 @@
 <body oncontextmenu="return false;">
 
 <header class="topbar">
-  <div class="brand">විෂයානුබද්ධ වාග් මාලාව<small>පරිපාලක පුවරුව — ඇතුළත් කිරීම් කළමනාකරණය</small></div>
+  <div class="brand">විෂයානුබද්ධ වාග් මාලාව-Subject-related vocabulary<small>පරිපාලක පුවරුව-Admin Panel — ඇතුළත් කිරීම් කළමනාකරණය-Data Entry Management</small></div>
   <div class="topbar-right" id="topRightSlot"></div>
 </header>
 
 <div class="tab-nav">
-  <button class="tab-btn" id="tabAdminBtn">පරිපාලක පුවරුව</button>
-  <button class="tab-btn" id="tabAnalyticsBtn">විශ්ලේෂණ</button>
+  <button class="tab-btn" id="tabAdminBtn">පරිපාලක පුවරුව-Admin Panel</button>
+  <button class="tab-btn" id="tabAnalyticsBtn">විශ්ලේෂණ-Analytics</button>
 </div>
 
 <main>
 
   <div id="loginWrap">
-    <h2>ගිණුමට පිවිසෙන්න</h2>
-    <p class="sub">ඔබගේ පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න.</p>
-    <label for="loginUser">Username</label>
+    <h2>ගිණුමට පිවිසෙන්න-Log in to the account</h2>
+    <p class="sub">ඔබගේ පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න-Enter your username and password.</p>
+    <label for="loginUser">පරිශීලක නාමය-Username</label>
     <input type="text" id="loginUser" autocomplete="username">
-    <label for="loginPass">Password</label>
+    <label for="loginPass">මුරපදය-Password</label>
     <input type="password" id="loginPass" autocomplete="current-password">
     <div id="loginError"></div>
-    <button class="btn" id="loginBtn">පිවිසෙන්න</button>
+    <button class="btn" id="loginBtn">පිවිසෙන්න-Log in</button>
   </div>
 
   <div id="dashboard">
 
     <div class="card">
-      <h2 style="margin-top:0; color:var(--forest-800); font-size:1.2rem;">නව වචනයක් ඇතුළත් කරන්න</h2>
+      <h2 style="margin-top:0; color:var(--forest-800); font-size:1.2rem;">නව වචනයක් ඇතුළත් කරන්න-Add a new word</h2>
       <div class="grid2">
         <div>
-          <label>වචනය</label>
-          <input type="text" id="fWord" placeholder="උදා: සංශ්ලේෂණය">
+          <label>වචනය-Word</label>
+          <input type="text" id="fWord" placeholder="උදා: සංශ්ලේෂණය-e.g: Synthesis">
         </div>
         <div>
-          <label>කැටගරිය</label>
-          <input type="text" id="fCategory" placeholder="උදා: විද්‍යාව">
+          <label>කැටගරිය-Category</label>
+          <select id="fCategory">
+            <option value="">තෝරන්න...-Select...</option>
+            <option value="History">History-ඉතිහාසය</option>
+            <option value="Religion">Religion-ආගම</option>
+            <option value="Science">Science-විද්‍යාව</option>
+            <option value="Technology">Technology-තාක්ෂණය</option>
+            <option value="Language">Language-භාෂාව</option>
+            <option value="National">National-ජාතික</option>
+            <option value="International">International-ජාත්‍යන්තර</option>
+            <option value="Other">Other-වෙනත්</option>
+          </select>
+          <input type="text" id="fCategoryOther" placeholder="කැටගරිය ලියන්න-Write the category" style="display:none;">
         </div>
       </div>
-      <label>අර්ථ විස්තරය</label>
-      <textarea id="fMeaning" placeholder="වචනයේ සම්පූර්ණ අර්ථ විස්තරය මෙහි ලියන්න"></textarea>
-      <label>සාරාංශය</label>
-      <textarea id="fSummary" placeholder="කෙටි සාරාංශයක්"></textarea>
-      <label>මූලාශ්‍රය</label>
-      <input type="text" id="fSource" placeholder="උදා: පෙළ පොත, පිටුව 45">
+      <label>අර්ථ විස්තරය-Meaning</label>
+      <textarea id="fMeaning" placeholder="වචනයේ සම්පූර්ණ අර්ථ විස්තරය මෙහි ලියන්න-Write the full meaning of the word here"></textarea>
+      <label>මූලාශ්‍රය-Source</label>
+      <select id="fSource">
+        <option value="">තෝරන්න...-Select...</option>
+        <option value="6 පෙළ පොත">6 පෙළ පොත/Grade 6 Text book</option>
+        <option value="7 පොළ පොත">7 පෙළ පොත/Grade 7 Text book</option>
+        <option value="8 පෙළ පොත">8 පෙළ පොත/Grade 8 Text book</option>
+        <option value="9 පෙළ පොත">9 පෙළ පොත/Grade 9 Text book</option>
+        <option value="10 පොළ පොත">10 පෙළ පොත/Grade 10 Text book</option>
+        <option value="11 පෙළ පොත">11 පෙළ පොත/Grade 11 Text book</option>
+        <option value="බාහිර මූලාශ්‍රයකි">බාහිර මූලාශ්‍රයකි/Other Source</option>
+      </select>
+      <input type="text" id="fSourceOther" placeholder="මූලාශ්‍රය ලියන්න (උදා: පොත/වෙබ් අඩවිය, පිටුව 45)-Write the source (e.g: book/website, page 45)" style="display:none;">
       <div class="checkbox-row">
         <input type="checkbox" id="fDraft">
-        <label for="fDraft">Draft ලෙස සුරකින්න (පොදුවේ නොපෙන්වන්න)</label>
+        <label for="fDraft">Draft ලෙස සුරකින්න (පොදුවේ නොපෙන්වන්න)-Save as Draft (not publicly visible)</label>
       </div>
-      <button class="btn" id="addBtn" style="width:auto; padding:12px 28px;">එකතු කරන්න</button>
+      <button class="btn" id="addBtn" style="width:auto; padding:12px 28px;">එකතු කරන්න-Add</button>
     </div>
 
     <div class="section-title">
-      <h2>මා ඇතුළත් කළ දත්ත</h2>
+      <h2>මා ඇතුළත් කළ දත්ත-My submitted entries</h2>
       <span id="countLabel"></span>
     </div>
     <div id="entriesList"></div>
@@ -300,33 +319,53 @@
 
   <div id="analyticsView">
     <div class="section-title" style="margin-top:0;">
-      <h2>විශ්ලේෂණ</h2>
-      <span>Password අවශ්‍ය නොවේ — විවෘතව බලාගත හැක</span>
+      <h2>විශ්ලේෂණ-Analytics</h2>
+      <span>Password අවශ්‍ය නොවේ — විවෘතව බලාගත හැක-Password not required — can be viewed openly</span>
     </div>
-    <div id="analyticsContent"><div class="empty-state">පූරණය වෙමින්...</div></div>
+    <div id="analyticsContent"><div class="empty-state">පූරණය වෙමින්...-Loading...</div></div>
   </div>
 </main>
 
-<footer>කලාපීය ගුරු සහයෝගීතාව</footer>
+<footer>කලාපීය ගුරු සහයෝගීතාව-Regional Teacher Collaboration</footer>
 
 <!-- Edit Modal -->
 <div class="overlay" id="editOverlay">
   <div class="modal">
-    <h3>ඇතුළත් කිරීම සංස්කරණය කරන්න</h3>
+    <h3>ඇතුළත් කිරීම සංස්කරණය කරන්න-Edit entry</h3>
     <input type="hidden" id="editId">
-    <label>වචනය</label>
+    <label>වචනය-Word</label>
     <input type="text" id="editWord">
-    <label>කැටගරිය</label>
-    <input type="text" id="editCategory">
-    <label>අර්ථ විස්තරය</label>
+    <label>කැටගරිය-Category</label>
+    <select id="editCategory">
+      <option value="">තෝරන්න...-Select...</option>
+      <option value="History">History-ඉතිහාසය</option>
+      <option value="Religion">Religion-ආගම</option>
+      <option value="Science">Science-විද්‍යාව</option>
+      <option value="Technology">Technology-තාක්ෂණය</option>
+      <option value="Language">Language-භාෂාව</option>
+      <option value="National">National-ජාතික</option>
+      <option value="International">International-ජාත්‍යන්තර</option>
+      <option value="Other">Other-වෙනත්</option>
+    </select>
+    <input type="text" id="editCategoryOther" placeholder="කැටගරිය ලියන්න-Write the category" style="display:none;">
+    <label>අර්ථ විස්තරය-Meaning</label>
     <textarea id="editMeaning"></textarea>
-    <label>සාරාංශය</label>
-    <textarea id="editSummary"></textarea>
-    <label>මූලාශ්‍රය</label>
-    <input type="text" id="editSource">
+    <label>මූලාශ්‍රය-Source</label>
+    <select id="editSource">
+      <option value="">තෝරන්න...-Select...</option>
+      <option value="6 පෙළ පොත">6 පෙළ පොත/Grade 6 Text book</option>
+      <option value="7 පොළ පොත">7 පෙළ පොත/Grade 7 Text book</option>
+      <option value="8 පෙළ පොත">8 පෙළ පොත/Grade 8 Text book</option>
+      <option value="8 පොළ පොත">8 පොළ පොත/Grade 8 Text book</option>
+      <option value="9 පෙළ පොත">9 පෙළ පොත/Grade 9 Text book</option>
+      <option value="10 පෙළ පොත">10 පෙළ පොත/Grade 10 Text book</option>
+      <option value="11 පෙළ පොත">11 පෙළ පොත/Grade 11 Text book</option>
+      <option value="බාහිර මූලාශ්‍රයකි">බාහිර මූලාශ්‍රයකි/Other Source</option>
+    </select>
+    <input type="text" id="editSourceOther" placeholder="මූලාශ්‍රය ලියන්න-Write the source" style="display:none;">
     <div class="modal-actions">
-      <button class="btn ghost" id="cancelEdit">අවලංගු කරන්න</button>
-      <button class="btn secondary" id="saveEdit" style="width:auto;">සුරකින්න</button>
+      <button class="btn ghost" id="cancelEdit">අවලංගු කරන්න-Cancel</button>
+      <button class="btn secondary" id="saveEdit" style="width:auto;">සුරකින්න-Save</button>
     </div>
   </div>
 </div>
@@ -334,20 +373,21 @@
 <!-- Duplicate Word Warning Modal -->
 <div class="overlay" id="duplicateOverlay">
   <div class="modal">
-    <h3>වචනය දැනටමත් තිබේ</h3>
+    <h3>වචනය දැනටමත් තිබේ-Word already exists</h3>
     <div class="dup-message">
-      මේ වචනය දැනටමත් ඇතුළත් කර තිබේ. එය වැරදි නම් හෝ එහි අඩුවවක් ඇත්නම් පමණක් අලුතෙන් ඇතුළත් කරන්න. නමුත් පැරණි ඇතුළත් කිරීම මකා දැමීමට හෝ වෙනස් කළ හැක්කේ Authorට පමණි.
+      මේ වචනය දැනටමත් ඇතුළත් කර තිබේ. එය වැරදි නම් හෝ එහි අඩුවවක් ඇත්නම් පමණක් අලුතෙන් ඇතුළත් කරන්න. නමුත් පැරණි ඇතුළත් කිරීම මකා දැමීමට හෝ වෙනස් කළ හැක්කේ Authorට පමණි.<br><br>
+      This word has already been entered. Only add it again if it is incorrect or incomplete. However, only the original Author can delete or modify the existing entry.
     </div>
     <div class="dup-existing">
       <div class="dup-word" id="dupWord"></div>
       <div class="dup-meaning" id="dupMeaning"></div>
     </div>
     <div class="modal-actions" id="dupActionsInfo" style="display:none;">
-      <button class="btn secondary" id="dupOkBtn" style="width:auto;">තේරුණා</button>
+      <button class="btn secondary" id="dupOkBtn" style="width:auto;">තේරුණා-Understood</button>
     </div>
     <div class="modal-actions" id="dupActionsConfirm" style="display:none;">
-      <button class="btn ghost" id="dupCancelBtn">අවලංගු කරන්න</button>
-      <button class="btn secondary" id="dupProceedBtn" style="width:auto;">එසේම එකතු කරන්න</button>
+      <button class="btn ghost" id="dupCancelBtn">අවලංගු කරන්න-Cancel</button>
+      <button class="btn secondary" id="dupProceedBtn" style="width:auto;">එසේම එකතු කරන්න-Add anyway</button>
     </div>
   </div>
 </div>
@@ -385,7 +425,7 @@ function showToast(msg){
 function renderTopRight(){
   const slot = document.getElementById("topRightSlot");
   if (session){
-    slot.innerHTML = `<span class="pill">${escapeHtml(session.username)}</span><button class="logout" id="logoutBtn">ඉවත් වන්න</button>`;
+    slot.innerHTML = `<span class="pill">${escapeHtml(session.username)}</span><button class="logout" id="logoutBtn">ඉවත් වන්න-Log out</button>`;
     document.getElementById("logoutBtn").onclick = logout;
   } else {
     slot.innerHTML = "";
@@ -412,7 +452,7 @@ async function login(){
   const errEl = document.getElementById("loginError");
   errEl.textContent = "";
   if (!username || !password){
-    errEl.textContent = "පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න.";
+    errEl.textContent = "පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න.-Please enter username and password.";
     return;
   }
   try {
@@ -424,7 +464,7 @@ async function login(){
     if (!res.ok) throw new Error("network");
     const rows = await res.json();
     if (!rows || rows.length === 0){
-      errEl.textContent = "වැරදි පරිශීලක නාමයක් හෝ මුරපදයක්.";
+      errEl.textContent = "වැරදි පරිශීලක නාමයක් හෝ මුරපදයක්.-Incorrect username or password.";
       return;
     }
     session = { id: rows[0].id, username: rows[0].username };
@@ -434,19 +474,19 @@ async function login(){
     renderTopRight();
     loadEntries();
   } catch(e){
-    errEl.textContent = "සම්බන්ධතාවයේ දෝෂයක්. නැවත උත්සාහ කරන්න.";
+    errEl.textContent = "සම්බන්ධතාවයේ දෝෂයක්. නැවත උත්සාහ කරන්න.-Connection error. Please try again.";
   }
 }
 
 async function loadEntries(){
   const list = document.getElementById("entriesList");
-  list.innerHTML = `<div class="empty-state">පූරණය වෙමින්...</div>`;
+  list.innerHTML = `<div class="empty-state">පූරණය වෙමින්...-Loading...</div>`;
   try {
     const res = await fetch(`${REST}/word_aliases?author_id=eq.${session.id}&select=*&order=created_at.desc`, { headers: HEADERS });
     const rows = await res.json();
-    document.getElementById("countLabel").textContent = `සම්පූර්ණ: ${rows.length}`;
+    document.getElementById("countLabel").textContent = `සම්පූර්ණ-Total: ${rows.length}`;
     if (rows.length === 0){
-      list.innerHTML = `<div class="empty-state">ඔබ තවම කිසිදු වචනයක් ඇතුළත් කර නොමැත.</div>`;
+      list.innerHTML = `<div class="empty-state">ඔබ තවම කිසිදු වචනයක් ඇතුළත් කර නොමැත.-You have not entered any words yet.</div>`;
       return;
     }
     list.innerHTML = rows.map(entryTemplate).join("");
@@ -456,7 +496,7 @@ async function loadEntries(){
       document.getElementById(`draft-${r.id}`).onclick = () => toggleDraft(r);
     });
   } catch(e){
-    list.innerHTML = `<div class="empty-state">දත්ත පූරණය කිරීමේදී දෝෂයක් ඇති විය.</div>`;
+    list.innerHTML = `<div class="empty-state">දත්ත පූරණය කිරීමේදී දෝෂයක් ඇති විය.-An error occurred while loading data.</div>`;
   }
 }
 
@@ -467,17 +507,16 @@ function entryTemplate(r){
   <div class="entry ${isDraft ? "draft" : ""}">
     <div class="entry-top">
       <div class="entry-word">${escapeHtml(r.word)}</div>
-      <span class="status-tag ${isDraft ? "draft" : ""}">${isDraft ? "Draft" : "Published"}</span>
+      <span class="status-tag ${isDraft ? "draft" : ""}">${isDraft ? "කටුපත-Draft" : "පළ කළ-Published"}</span>
     </div>
     <div class="entry-meta">
-      <div><b>අර්ථ විස්තරය:</b> ${escapeHtml(r.meaning || "-")}</div>
-      <div><b>සාරාංශය:</b> ${escapeHtml(r.summary || "-")}</div>
-      <div><b>කැටගරිය:</b> ${escapeHtml(r.category || "-")} &nbsp; | &nbsp; <b>මූලාශ්‍රය:</b> ${escapeHtml(r.source || "-")} &nbsp; | &nbsp; ${date}</div>
+      <div><b>අර්ථ විස්තරය-Meaning:</b> ${escapeHtml(r.meaning || "-")}</div>
+      <div><b>කැටගරිය-Category:</b> ${escapeHtml(r.category || "-")} &nbsp; | &nbsp; <b>මූලාශ්‍රය-Source:</b> ${escapeHtml(r.source || "-")} &nbsp; | &nbsp; ${date}</div>
     </div>
     <div class="entry-actions">
-      <button class="btn ghost" id="edit-${r.id}">සංස්කරණය</button>
-      <button class="btn secondary" id="draft-${r.id}">${isDraft ? "Publish කරන්න" : "Draft කරන්න"}</button>
-      <button class="btn danger" id="del-${r.id}">මකන්න</button>
+      <button class="btn ghost" id="edit-${r.id}">සංස්කරණය-Edit</button>
+      <button class="btn secondary" id="draft-${r.id}">${isDraft ? "Publish කරන්න-Publish" : "Draft කරන්න-Save as Draft"}</button>
+      <button class="btn danger" id="del-${r.id}">මකන්න-Delete</button>
     </div>
   </div>`;
 }
@@ -516,21 +555,65 @@ document.getElementById("fWord").addEventListener("blur", async (e) => {
   if (match) showDuplicateModal(match, "info");
 });
 
+// ---------------- CATEGORY / SOURCE DROPDOWNS ----------------
+const CATEGORY_OTHER_VALUE = "Other";
+const SOURCE_OTHER_VALUE = "බාහිර මූලාශ්‍රයකි";
+const KNOWN_CATEGORIES = ["History","Religion","Science","Technology","Language","National","International"];
+const KNOWN_SOURCES = ["6 පෙළ පොත","7 පොළ පොත","8 පෙළ පොත","8 පොළ පොත","9 පෙළ පොත","10 පොළ පොත","11 පෙළ පොත"];
+
+function toggleOtherInputVisibility(selectId, otherInputId, triggerValue){
+  const sel = document.getElementById(selectId);
+  const otherInput = document.getElementById(otherInputId);
+  const show = sel.value === triggerValue;
+  otherInput.style.display = show ? "block" : "none";
+  if (!show) otherInput.value = "";
+}
+
+function resolveDropdownValue(selectId, otherInputId, triggerValue){
+  const sel = document.getElementById(selectId);
+  if (sel.value === triggerValue){
+    return document.getElementById(otherInputId).value.trim();
+  }
+  return sel.value;
+}
+
+function populateDropdownForEdit(selectId, otherInputId, triggerValue, currentValue, knownValues){
+  const sel = document.getElementById(selectId);
+  const otherInput = document.getElementById(otherInputId);
+  if (currentValue && knownValues.includes(currentValue)){
+    sel.value = currentValue;
+    otherInput.style.display = "none";
+    otherInput.value = "";
+  } else if (currentValue){
+    sel.value = triggerValue;
+    otherInput.style.display = "block";
+    otherInput.value = currentValue;
+  } else {
+    sel.value = "";
+    otherInput.style.display = "none";
+    otherInput.value = "";
+  }
+}
+
+document.getElementById("fCategory").addEventListener("change", () => toggleOtherInputVisibility("fCategory","fCategoryOther", CATEGORY_OTHER_VALUE));
+document.getElementById("fSource").addEventListener("change", () => toggleOtherInputVisibility("fSource","fSourceOther", SOURCE_OTHER_VALUE));
+document.getElementById("editCategory").addEventListener("change", () => toggleOtherInputVisibility("editCategory","editCategoryOther", CATEGORY_OTHER_VALUE));
+document.getElementById("editSource").addEventListener("change", () => toggleOtherInputVisibility("editSource","editSourceOther", SOURCE_OTHER_VALUE));
+
 async function addEntry(){
   const word = document.getElementById("fWord").value.trim();
   const meaning = document.getElementById("fMeaning").value.trim();
-  const summary = document.getElementById("fSummary").value.trim();
-  const category = document.getElementById("fCategory").value.trim();
-  const source = document.getElementById("fSource").value.trim();
+  const category = resolveDropdownValue("fCategory","fCategoryOther", CATEGORY_OTHER_VALUE);
+  const source = resolveDropdownValue("fSource","fSourceOther", SOURCE_OTHER_VALUE);
   const isDraft = document.getElementById("fDraft").checked;
 
   if (!word || !meaning){
-    showToast("වචනය සහ අර්ථ විස්තරය අවශ්‍යයි.");
+    showToast("වචනය සහ අර්ථ විස්තරය අවශ්‍යයි.-Word and meaning are required.");
     return;
   }
 
   const payload = {
-    word, meaning, summary, category, source,
+    word, meaning, category, source,
     author: session.username,
     author_id: session.id,
     status: isDraft ? "draft" : "published"
@@ -554,12 +637,18 @@ async function submitEntry(payload){
       body: JSON.stringify(payload)
     });
     if (!res.ok) throw new Error("insert failed");
-    ["fWord","fMeaning","fSummary","fCategory","fSource"].forEach(id => document.getElementById(id).value = "");
+    ["fWord","fMeaning"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("fCategory").value = "";
+    document.getElementById("fSource").value = "";
+    document.getElementById("fCategoryOther").value = "";
+    document.getElementById("fCategoryOther").style.display = "none";
+    document.getElementById("fSourceOther").value = "";
+    document.getElementById("fSourceOther").style.display = "none";
     document.getElementById("fDraft").checked = false;
-    showToast("සාර්ථකව එකතු කරන ලදී.");
+    showToast("සාර්ථකව එකතු කරන ලදී.-Successfully added.");
     loadEntries();
   } catch(e){
-    showToast("එකතු කිරීමේදී දෝෂයක් ඇති විය.");
+    showToast("එකතු කිරීමේදී දෝෂයක් ඇති විය.-An error occurred while adding.");
   }
 }
 
@@ -567,10 +656,9 @@ async function submitEntry(payload){
 function openEdit(r){
   document.getElementById("editId").value = r.id;
   document.getElementById("editWord").value = r.word || "";
-  document.getElementById("editCategory").value = r.category || "";
+  populateDropdownForEdit("editCategory","editCategoryOther", CATEGORY_OTHER_VALUE, r.category || "", KNOWN_CATEGORIES);
   document.getElementById("editMeaning").value = r.meaning || "";
-  document.getElementById("editSummary").value = r.summary || "";
-  document.getElementById("editSource").value = r.source || "";
+  populateDropdownForEdit("editSource","editSourceOther", SOURCE_OTHER_VALUE, r.source || "", KNOWN_SOURCES);
   document.getElementById("editOverlay").classList.add("show");
 }
 
@@ -578,10 +666,9 @@ async function saveEdit(){
   const id = document.getElementById("editId").value;
   const payload = {
     word: document.getElementById("editWord").value.trim(),
-    category: document.getElementById("editCategory").value.trim(),
+    category: resolveDropdownValue("editCategory","editCategoryOther", CATEGORY_OTHER_VALUE),
     meaning: document.getElementById("editMeaning").value.trim(),
-    summary: document.getElementById("editSummary").value.trim(),
-    source: document.getElementById("editSource").value.trim(),
+    source: resolveDropdownValue("editSource","editSourceOther", SOURCE_OTHER_VALUE),
     updated_at: new Date().toISOString()
   };
   try {
@@ -592,25 +679,25 @@ async function saveEdit(){
     });
     if (!res.ok) throw new Error("update failed");
     document.getElementById("editOverlay").classList.remove("show");
-    showToast("සංස්කරණය සුරැකිණි.");
+    showToast("සංස්කරණය සුරැකිණි.-Edit saved.");
     loadEntries();
   } catch(e){
-    showToast("සංස්කරණය අසාර්ථක විය.");
+    showToast("සංස්කරණය අසාර්ථක විය.-Edit failed.");
   }
 }
 
 async function deleteEntry(id){
-  if (!confirm("මෙම ඇතුළත් කිරීම මකා දැමීමට අවශ්‍ය බව ඔබට විශ්වාසද?")) return;
+  if (!confirm("මෙම ඇතුළත් කිරීම මකා දැමීමට අවශ්‍ය බව ඔබට විශ්වාසද?-Are you sure you want to delete this entry?")) return;
   try {
     const res = await fetch(`${REST}/word_aliases?id=eq.${id}&author_id=eq.${session.id}`, {
       method: "DELETE",
       headers: HEADERS
     });
     if (!res.ok) throw new Error("delete failed");
-    showToast("මකා දමන ලදී.");
+    showToast("මකා දමන ලදී.-Deleted.");
     loadEntries();
   } catch(e){
-    showToast("මකා දැමීම අසාර්ථක විය.");
+    showToast("මකා දැමීම අසාර්ථක විය.-Deletion failed.");
   }
 }
 
@@ -623,10 +710,10 @@ async function toggleDraft(r){
       body: JSON.stringify({ status: newStatus, updated_at: new Date().toISOString() })
     });
     if (!res.ok) throw new Error("toggle failed");
-    showToast(newStatus === "draft" ? "Draft තත්ත්වයට මාරු කරන ලදී." : "Publish කරන ලදී.");
+    showToast(newStatus === "draft" ? "Draft තත්ත්වයට මාරු කරන ලදී.-Changed to Draft status." : "Publish කරන ලදී.-Published.");
     loadEntries();
   } catch(e){
-    showToast("තත්ත්වය වෙනස් කිරීම අසාර්ථක විය.");
+    showToast("තත්ත්වය වෙනස් කිරීම අසාර්ථක විය.-Status change failed.");
   }
 }
 
@@ -682,7 +769,7 @@ document.getElementById("tabAnalyticsBtn").addEventListener("click", showAnalyti
 // ---------------- ANALYTICS (no login required) ----------------
 async function loadAnalytics(){
   const wrap = document.getElementById("analyticsContent");
-  wrap.innerHTML = `<div class="empty-state">පූරණය වෙමින්...</div>`;
+  wrap.innerHTML = `<div class="empty-state">පූරණය වෙමින්...-Loading...</div>`;
   try {
     // word_aliases: has author + source, drives the author ranking & source list
     const waRes = await fetch(`${REST}/word_aliases?select=author,source`, { headers: HEADERS });
@@ -704,7 +791,7 @@ async function loadAnalytics(){
     const authorCounts = {};
     const sourceCounts = {};
     waRows.forEach(r => {
-      const a = (r.author && r.author.trim()) ? r.author.trim() : "නොදන්නා";
+      const a = (r.author && r.author.trim()) ? r.author.trim() : "නොදන්නා-Unknown";
       authorCounts[a] = (authorCounts[a] || 0) + 1;
       const s = (r.source && r.source.trim()) ? r.source.trim() : null;
       if (s) sourceCounts[s] = (sourceCounts[s] || 0) + 1;
@@ -716,7 +803,7 @@ async function loadAnalytics(){
     const totalWords = waRows.length + learnxCount;
 
     const datasetRows = [
-      ["විෂයානුබද්ධ වාග් මාලාව (word_aliases)", waRows.length],
+      ["විෂයානුබද්ධ වාග් මාලාව-Subject-related Vocabulary (word_aliases)", waRows.length],
       ["learnX Pedia", learnxError ? "-" : learnxCount]
     ];
 
@@ -724,15 +811,15 @@ async function loadAnalytics(){
       <div class="stat-grid">
         <div class="stat-card">
           <div class="stat-num">${totalWords}</div>
-          <div class="stat-label">දැනට ඇති සම්පූර්ණ වචන ගණන (සියලු මූලාශ්‍ර)</div>
+          <div class="stat-label">දැනට ඇති සම්පූර්ණ වචන ගණන (සියලු මූලාශ්‍ර)-Total words currently available (all sources)</div>
         </div>
         <div class="stat-card">
           <div class="stat-num">${totalAuthors}</div>
-          <div class="stat-label">දැනට සිටින Author ගණන (word_aliases)</div>
+          <div class="stat-label">දැනට සිටින Author ගණන (word_aliases)-Current number of Authors (word_aliases)</div>
         </div>
       </div>
 
-      <h3 class="sub-heading">දත්ත මූලාශ්‍ර අනුව වචන ගණන</h3>
+      <h3 class="sub-heading">දත්ත මූලාශ්‍ර අනුව වචන ගණන-Word count by data source</h3>
       <div class="rank-list">
         ${datasetRows.map(([name, count]) => `
           <div class="rank-row">
@@ -740,9 +827,9 @@ async function loadAnalytics(){
             <span class="rank-count">${count}</span>
           </div>`).join("")}
       </div>
-      ${learnxError ? `<div class="empty-state" style="margin-top:10px;">learnX Pedia table එකට connect වෙන්න බැරි වුණා — table නම හෝ permissions නැවත පරීක්ෂා කරන්න.</div>` : ""}
+      ${learnxError ? `<div class="empty-state" style="margin-top:10px;">learnX Pedia table එකට connect වෙන්න බැරි වුණා — table නම හෝ permissions නැවත පරීක්ෂා කරන්න.-Could not connect to the learnX Pedia table — please check the table name or permissions.</div>` : ""}
 
-      <h3 class="sub-heading">Author අනුව වචන ගණන (word_aliases, අවරෝහණ පිළිවෙළ)</h3>
+      <h3 class="sub-heading">Author අනුව වචන ගණන (word_aliases, අවරෝහණ පිළිවෙළ)-Word count by Author (word_aliases, descending order)</h3>
       ${
         authorList.length
           ? `<div class="rank-list">${authorList.map(([name, count], i) => `
@@ -751,20 +838,20 @@ async function loadAnalytics(){
                 <span class="rank-name">${escapeHtml(name)}</span>
                 <span class="rank-count">${count}</span>
               </div>`).join("")}</div>`
-          : `<div class="empty-state">දත්ත නොමැත.</div>`
+          : `<div class="empty-state">දත්ත නොමැත.-No data.</div>`
       }
-      <div class="empty-state" style="margin-top:10px; padding:14px; text-align:left;">learnX Pedia table එකේ author තොරතුරු නොමැති නිසා, එහි වචන මෙම ranking එකට ඇතුළත් නොවේ — ඒවා ඉහත මුළු ගණනට පමණක් එකතු වේ.</div>
+      <div class="empty-state" style="margin-top:10px; padding:14px; text-align:left;">learnX Pedia table එකේ author තොරතුරු නොමැති නිසා, එහි වචන මෙම ranking එකට ඇතුළත් නොවේ — ඒවා ඉහත මුළු ගණනට පමණක් එකතු වේ.-Since the learnX Pedia table has no author information, its words are not included in this ranking — they are only added to the total count above.</div>
 
-      <h3 class="sub-heading">භාවිත කර ඇති මූලාශ්‍ර (word_aliases)</h3>
+      <h3 class="sub-heading">භාවිත කර ඇති මූලාශ්‍ර (word_aliases)-Sources used (word_aliases)</h3>
       ${
         sourceList.length
           ? `<div class="tag-cloud">${sourceList.map(([s, count]) => `
               <span class="source-tag">${escapeHtml(s)}<b>${count}</b></span>`).join("")}</div>`
-          : `<div class="empty-state">මූලාශ්‍ර සටහන් වී නොමැත.</div>`
+          : `<div class="empty-state">මූලාශ්‍ර සටහන් වී නොමැත.-No sources recorded.</div>`
       }
     `;
   } catch (e) {
-    wrap.innerHTML = `<div class="empty-state">දත්ත පූරණය කිරීමේදී දෝෂයක් ඇති විය.</div>`;
+    wrap.innerHTML = `<div class="empty-state">දත්ත පූරණය කිරීමේදී දෝෂයක් ඇති විය.-An error occurred while loading data.</div>`;
   }
 }
 
